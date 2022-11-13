@@ -20,7 +20,8 @@
     "react-dom": "^18.2.0",
     "react-final-form": "^6.5.9",
     "react-redux": "^8.0.5",
-    "redux-toolkit": "^1.1.2"
+    "redux-toolkit": "^1.1.2",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.24",
