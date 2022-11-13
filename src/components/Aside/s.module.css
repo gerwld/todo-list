@@ -1,7 +1,7 @@
 .aside {
  flex: 0 0 300px;
  padding: 20px;
- background-color: rgb(235, 235, 235);
+ background-color: var(--sec-color);
  color: #fff;
 }
 

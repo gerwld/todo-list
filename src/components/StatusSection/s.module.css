@@ -1,6 +1,31 @@
 
 .section {
  flex: 1;
- margin: 10px;
- border: 1px solid gray;
+ margin: 10px 10px 0;
+ border: 1px solid var(--sec-color);
+ border-radius: 10px 10px 0 0;
+ border-bottom: 0;
+ overflow: hidden;
+}
+
+.title {
+ display: block;
+ width: 100%;
+ margin: 0;
+ padding: 0.3em 0;
+
+ line-height: 100%;
+ font-size: 1.7em;
+ text-align: center;
+ text-transform: capitalize;
+ color: #fff;
+ background-color: #696d74;
+ user-select: none;
+}
+
+.content {
+ display: block;
+ padding: 14px;
+ height: 100%;
+ background-color: rgba(255, 255, 255, 0.084);
 }

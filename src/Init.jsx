@@ -7,9 +7,9 @@ const Init = () => {
   <div className="app_main">
    <Aside />
    <div className="app_sections">
-    <StatusSection />
-    <StatusSection />
-    <StatusSection />
+    <StatusSection title={'to do'} stat={'todo'} />
+    <StatusSection title={'in-progress'} stat={'prog'}/>
+    <StatusSection title={'done'} stat={'done'}/>
    </div>
   </div>
  );
