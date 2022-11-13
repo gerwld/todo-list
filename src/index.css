@@ -13,7 +13,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  --main-color: #445d99;
+  --main-color: #0b1730;
   --sec-color: #e6e8ee;
 }
 
@@ -58,13 +58,31 @@ button {
   height: 100vh;
 }
 
-.todo_header {
+/* headers */
+
+.todo_section h1 {
   background-color: #e57373;
 }
 
-.prog_header {
+.prog_section h1 {
   background-color: #7986cb;
 }
-.done_header {
+.done_section h1 {
   background-color: #4db6ac;
 }
+/* headers end */
+/* lables */
+
+.todo_section .lables span {
+  background-color: #e57373;
+}
+
+.prog_section .lables span {
+  background-color: #7986cb;
+}
+
+.done_section .lables span {
+  background-color: #4db6ac;
+}
+
+/* lables end */

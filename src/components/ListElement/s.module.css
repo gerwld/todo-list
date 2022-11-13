@@ -1,0 +1,57 @@
+.content {
+ position: relative;
+ padding: 12px;
+ border-radius: 8px;
+ background-color: rgba(255, 255, 255, 0.158);
+ border: 1px solid rgba(255, 255, 255, 0.2);
+ box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.title {
+ margin: 0 0 6px;
+ font-size: 1.4rem;
+ line-height: 135%;
+}
+
+.desc {
+ margin: 5px 0 10px;
+ font-size: 1.05rem;
+ line-height: 140%;
+}
+
+.actions {
+ top: 0.8em;
+ right: 8px;
+ position: absolute;
+}
+
+.btn_edit {
+ padding: 5px 10px;
+ border-radius: 20px;
+ font-size: 0.9rem;
+}
+
+.labels span {
+ display: inline-block;
+ padding: 5px 8px 4px;
+ margin: 0 5px 4px 0;
+
+ line-height: 0.8rem;
+ font-size: 0.8rem;
+ font-weight: 500;
+ text-transform: uppercase;
+ text-wrap: no-wrap;
+
+ background-color: rgb(100, 87, 87);
+ border-radius: 4px;
+ user-select: none;
+
+}
+
+.sub_task {
+ margin-right: 7px;
+}
+
+.sub_task:nth-last-child(1) {
+ margin-right: 0;
+}
