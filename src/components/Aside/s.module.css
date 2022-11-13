@@ -1,0 +1,21 @@
+.aside {
+ flex: 0 0 300px;
+ padding: 20px;
+ background-color: rgb(235, 235, 235);
+ color: #fff;
+}
+
+.aside button {
+ color: #fff;
+}
+
+.btn_create {
+ width: 100%;
+ height: 60px;
+ font-size: 1.05rem;
+ font-weight: 600;
+ letter-spacing: 0.05em;
+ box-sizing: border-box;
+
+ background-color: var(--main-color);
+}
