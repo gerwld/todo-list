@@ -1,6 +1,7 @@
 .content {
  position: relative;
  padding: 12px;
+ margin-bottom: 9px;
  border-radius: 8px;
  background-color: rgba(255, 255, 255, 0.158);
  border: 1px solid rgba(255, 255, 255, 0.2);

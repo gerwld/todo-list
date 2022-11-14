@@ -6,13 +6,13 @@ const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
   <article className={s.content}>
    <h2 className={s.title}>{title}</h2>
 
+   <div className={`${s.labels} lables`}>
    {tags?.length
     ? tags.map((tag) => (
-       <div key={id + tag + "_key"} className={`${s.labels} lables`}>
-        <span>{tag}</span>
-       </div>
+        <span  key={id + tag + "_key"}>{tag}</span>
       ))
     : ""}
+    </div>
 
    <p className={s.desc}>{desc}</p>
 
