@@ -60,28 +60,28 @@ button {
 
 /* headers */
 
-.todo_section h1 {
+.section_0 h1 {
   background-color: #e57373;
 }
 
-.prog_section h1 {
+.section_1 h1 {
   background-color: #7986cb;
 }
-.done_section h1 {
+.section_2 h1 {
   background-color: #4db6ac;
 }
 /* headers end */
 /* lables */
 
-.todo_section .lables span {
+.section_0 .lables span {
   background-color: #e57373;
 }
 
-.prog_section .lables span {
+.section_1 .lables span {
   background-color: #7986cb;
 }
 
-.done_section .lables span {
+.section_2 .lables span {
   background-color: #4db6ac;
 }
 

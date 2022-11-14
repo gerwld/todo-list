@@ -2,22 +2,23 @@ import React, { useRef, useState } from "react";
 import { Form, Field } from "react-final-form";
 import { v4 as uuid } from "uuid";
 
-const TaskForm = ({onSubmitCB}) => {
+const TaskForm = ({ onSubmitCB }) => {
  let tag_input = useRef(null);
  let task_input = useRef(null);
  let [localTags, setTags] = useState([{ id: "dsvdsv", title: "Tag", isChecked: true }]);
  let [localTasks, setTasks] = useState([{ id: "dsvldsv", title: "Subask exm", isChecked: true }]);
 
  const onSubmit = (obj, action) => {
-  let tags = [...localTags].filter(e => e.isChecked);
-  const newObj = {...obj, tags, tasks: localTasks};
+  let id = uuid();
+  let tags = [...localTags].filter((e) => e.isChecked).map((e) => e.title);
+  const newObj = { id, ...obj, tags, subtasks: localTasks, status: Number(obj.status) };
   onSubmitCB(newObj);
   action.reset();
  };
 
  const onAddLocalTag = () => {
   let id = uuid();
-  let val = tag_input.current.value.trim();
+  let val = tag_input.current.value.trim().toLowerCase();
   const isExist = localTags.some((e) => e.title === val);
   if (val && !isExist) {
    setTags([{ id, title: val, isChecked: true }, ...localTags]);
@@ -27,7 +28,7 @@ const TaskForm = ({onSubmitCB}) => {
 
  const onAddLocalTask = () => {
   let id = uuid();
-  let val = task_input.current.value.trim();
+  let val = task_input.current.value.trim().toLowerCase();
   const isExist = localTasks.some((e) => e.title === val);
   if (val && !isExist) {
    setTasks([{ id, title: val, isChecked: false }, ...localTasks]);
@@ -37,14 +38,14 @@ const TaskForm = ({onSubmitCB}) => {
 
  const toggleSelect = (id, isTask) => {
   let newObj;
-  if(isTask) {
+  if (isTask) {
    newObj = [...localTasks];
   } else newObj = [...localTags];
 
   let i = newObj.findIndex((e) => e.id === id);
   newObj[i].isChecked = !newObj[i].isChecked;
 
-  if(isTask) {
+  if (isTask) {
    setTasks(newObj);
   } else setTags(newObj);
  };
@@ -129,7 +130,6 @@ const TaskForm = ({onSubmitCB}) => {
        Reset
       </button>
      </div>
-
     </form>
    )}
   />

@@ -2,7 +2,6 @@ const SET_INIT = "todo-list/tasks-reducer/SET_INIT";
 const SET_EDITMODE = "todo-list/tasks-reducer/SET_EDITMODE";
 const SET_CREATEMODE = "todo-list/tasks-reducer/SET_CREATEMODE";
 const SET_CURRENT = "todo-list/tasks-reducer/SET_CURRENT";
-
 const ADD_TASK = "todo-list/tasks-reducer/ADD_TASK";
 
 export const setInit = (isInitialized) => ({ type: SET_INIT, isInitialized });
@@ -24,10 +23,10 @@ const init = {
    status: 0,
    dateCreated: "1668380951687.2",
    lastEdit: "1668380951687.2",
-   labels: ["some lable", "work"],
+   tags: ["some lable", "work"],
    subtasks: [
-    { id: "49bkfdke4", title: "Subtask 1", isDone: false },
-    { id: "49bkfdkfe4", title: "Subtask 2", isDone: false },
+    { id: "49bkfdke4", title: "Subtask 1", isChecked: false },
+    { id: "49bkfdkfe4", title: "Subtask 2", isChecked: false },
    ],
   },
  ],
@@ -58,11 +57,20 @@ const tasksReducer = (state = init, action) => {
    case ADD_TASK:
     return {
       ...state,
-      tasks: [...tasks, action.taskObj]
+      tasks: [...state.tasks, action.taskObj]
     }
   default:
    return state;
  }
 };
+
+export const setTaskTC = (obj) => {
+  let newObj = {...obj,
+    dateCreated: Date.now(),
+  };
+  return (dispatch) => {
+    dispatch(addTask(newObj));
+  };
+}
 
 export default tasksReducer;

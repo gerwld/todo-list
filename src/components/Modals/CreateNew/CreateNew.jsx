@@ -1,10 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setTaskTC } from "../../../redux/reducers/tasks-reducer";
 import TaskForm from "../../TaskForm/TaskForm";
 
 const CreateNew = () => {
+ const disp = useDispatch();
 
  const onSubmitCB = (obj) => {
-  console.log(obj);
+  disp(setTaskTC(obj));
  }
 
  return (
