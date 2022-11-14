@@ -3,10 +3,13 @@ const SET_EDITMODE = "todo-list/tasks-reducer/SET_EDITMODE";
 const SET_CREATEMODE = "todo-list/tasks-reducer/SET_CREATEMODE";
 const SET_CURRENT = "todo-list/tasks-reducer/SET_CURRENT";
 
+const ADD_TASK = "todo-list/tasks-reducer/ADD_TASK";
+
 export const setInit = (isInitialized) => ({ type: SET_INIT, isInitialized });
 export const setEditmode = (isEditMode) => ({ type: SET_EDITMODE, isEditMode });
 export const setCreatemode = (isCreateMode) => ({ type: SET_CREATEMODE, isCreateMode });
 export const setCurrent = (currentElement) => ({ type: SET_CURRENT, currentElement });
+export const addTask = (taskObj) => ({ type: ADD_TASK, taskObj });
 
 const init = {
  isInitialized: false,
@@ -52,7 +55,11 @@ const tasksReducer = (state = init, action) => {
     ...state,
     currentElement: action.currentElement,
    };
-
+   case ADD_TASK:
+    return {
+      ...state,
+      tasks: [...tasks, action.taskObj]
+    }
   default:
    return state;
  }

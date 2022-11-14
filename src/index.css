@@ -86,3 +86,7 @@ button {
 }
 
 /* lables end */
+
+label {
+  display: block;
+}
