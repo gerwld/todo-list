@@ -1,26 +1,28 @@
 import React from "react";
 import s from "./s.module.css";
 
-const ListElement = () => {
+const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
  return (
   <article className={s.content}>
-   <h2 className={s.title}>Task title</h2>
+   <h2 className={s.title}>{title}</h2>
 
-   <div className={`${s.labels} lables`}>
-    <span>Some fancy lable</span>
-   </div>
+   {tags?.length
+    ? tags.map((tag) => (
+       <div key={id + tag + "_key"} className={`${s.labels} lables`}>
+        <span>{tag}</span>
+       </div>
+      ))
+    : ""}
 
-   <p className={s.desc}>Task desc</p>
+   <p className={s.desc}>{desc}</p>
 
    <div className={s.sub_tasks}>
-    <label className={s.sub_task}>
+   {subtasks?.length ? subtasks.map(e => 
+    <label key={e.id} className={s.sub_task}>
      <input type="checkbox" />
-     <span>Subtask 1</span>
+     <span>{e.title}</span>
     </label>
-    <label className={s.sub_task}>
-     <input type="checkbox" />
-     <span>Subtask 2</span>
-    </label>
+   ) : ''}
    </div>
 
    <div className={s.actions}>
@@ -28,6 +30,15 @@ const ListElement = () => {
    </div>
   </article>
  );
+};
+
+ListElement.defaultProps = {
+ id: "unset",
+ title: "No title",
+ desc: "No description",
+ status: 0,
+ tags: [],
+ subtasks: [],
 };
 
 export default ListElement;

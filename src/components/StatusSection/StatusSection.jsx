@@ -6,16 +6,19 @@ const StatusSection = ({ title, stat, items }) => {
  const [tasks, setTasks] = useState(null);
 
  useEffect(() => {
-  let arr = items.filter(e => e.status === stat);
+  let arr = items.filter((e) => e.status === stat);
   setTasks(arr);
  }, [items]);
-
 
  return (
   <section className={`${s.section} section_${stat}`}>
    <h1 className={s.title}>{title}</h1>
    <div className={s.content}>
-   {tasks?.length ? tasks.map(e => <ListElement key={e.id} />) : 'No items'}
+    {tasks?.length
+     ? tasks.map((e) => (
+        <ListElement key={e.id} obj={e} id={e.id} title={e.title} desc={e.desc} status={e.status} tags={e.tags} subtasks={e.subtasks} />
+       ))
+     : "No items"}
    </div>
   </section>
  );
