@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Form, Field } from "react-final-form";
 import { v4 as uuid } from "uuid";
 
@@ -10,14 +10,14 @@ const CreateNewForm = () => {
  let tag_input = useRef(null);
  let task_input = useRef(null);
  let [localTags, setTags] = useState([{ id: "dsvdsv", title: "Tag", isChecked: true }]);
- let [localTasks, setTasks] = useState([{ id: "dsvdsv", title: "Subask exm", isChecked: true }]);
+ let [localTasks, setTasks] = useState([{ id: "dsvldsv", title: "Subask exm", isChecked: true }]);
 
  const onAddLocalTag = () => {
   let id = uuid();
   let val = tag_input.current.value.trim();
   const isExist = localTags.some((e) => e.title === val);
   if (val && !isExist) {
-   setTags([...localTags, { id, title: val, isChecked: true }]);
+   setTags([{ id, title: val, isChecked: true }, ...localTags]);
   }
   tag_input.current.value = "";
  };
@@ -27,23 +27,23 @@ const CreateNewForm = () => {
   let val = task_input.current.value.trim();
   const isExist = localTasks.some((e) => e.title === val);
   if (val && !isExist) {
-   setTasks([...localTasks, { id, title: val, isChecked: false }]);
+   setTasks([{ id, title: val, isChecked: false }, ...localTasks]);
   }
   task_input.current.value = "";
  };
 
- const toggleTag = (id) => {
-  let i = localTags.findIndex((e) => e.id == id);
-  let newObj = [...localTags];
-  newObj[i].isChecked = !newObj[i].isChecked;
-  setTags(newObj);
- };
+ const toggleSelect = (id, isTask) => {
+  let newObj;
+  if(isTask) {
+   newObj = [...localTasks];
+  } else newObj = [...localTags];
 
- const toggleTask = (id) => {
-  let i = localTasks.findIndex((e) => e.id == id);
-  let newObj = [...localTasks];
+  let i = newObj.findIndex((e) => e.id === id);
   newObj[i].isChecked = !newObj[i].isChecked;
-  setTasks(newObj);
+
+  if(isTask) {
+   setTasks(newObj);
+  } else setTags(newObj);
  };
 
  const removeTask = (id) => {
@@ -51,9 +51,6 @@ const CreateNewForm = () => {
   setTasks(newObj);
  };
 
- useEffect(() => {
-  console.log(localTasks);
- }, [localTags, localTasks]);
  return (
   <Form
    onSubmit={onSubmit}
@@ -93,7 +90,7 @@ const CreateNewForm = () => {
      <div className="tag_list">
       {localTags.map((e) => (
        <label key={e.id}>
-        <input type="checkbox" onChange={() => toggleTag(e.id)} checked={e.isChecked} name={`tag_${e.title}`} />
+        <input type="checkbox" onChange={() => toggleSelect(e.id)} checked={e.isChecked} name={`tag_${e.title}`} />
         {"  "}
         {e.title}
        </label>
@@ -111,7 +108,7 @@ const CreateNewForm = () => {
       {localTasks.map((e) => (
        <div key={e.id} className="task">
         <label>
-         <input type="checkbox" onChange={() => toggleTask(e.id)} name={e.title} checked={e.isChecked} /> {e.title}
+         <input type="checkbox" onChange={() => toggleSelect(e.id, true)} name={e.title} checked={e.isChecked} /> {e.title}
         </label>
         <button onClick={() => removeTask(e.id)} type="button">
          Delete
