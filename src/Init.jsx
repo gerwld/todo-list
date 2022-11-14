@@ -14,9 +14,11 @@ const Init = () => {
  }));
 
  useEffect(() => {
-  let allTags = tasks.map((e) => e.tags).flat(1);
-  let uniqueTags = allTags.filter(onlyUnique);
-  disp(setCurrentTags(uniqueTags));
+  if(tasks?.length) {
+   let allTags = tasks.map((e) => e.tags).flat(1);
+   let uniqueTags = allTags.filter(onlyUnique);
+   disp(setCurrentTags(uniqueTags));
+  }
  }, [tasks]);
 
  return (

@@ -2,7 +2,6 @@
  position: relative;
  padding: 12px;
  margin-bottom: 9px;
- border-radius: 8px;
  background-color: rgba(255, 255, 255, 0.158);
  border: 1px solid rgba(255, 255, 255, 0.2);
  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
@@ -28,7 +27,6 @@
 
 .btn_edit {
  padding: 5px 10px;
- border-radius: 20px;
  font-size: 0.9rem;
 }
 
@@ -41,10 +39,8 @@
  font-size: 0.8rem;
  font-weight: 500;
  text-transform: uppercase;
- text-wrap: no-wrap;
 
  background-color: rgb(100, 87, 87);
- border-radius: 4px;
  user-select: none;
 
 }

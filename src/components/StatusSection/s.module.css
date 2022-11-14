@@ -3,7 +3,6 @@
  flex: 1;
  margin: 10px 0 0 10px;
  border: 1px solid var(--sec-color);
- border-radius: 10px 10px 0 0;
  border-bottom: 0;
  overflow: hidden;
 }

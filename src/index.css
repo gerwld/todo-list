@@ -41,7 +41,7 @@ h1 {
 }
 
 button {
-  border-radius: 10px;
+  /* border-radius: 10px; */
   border: none;
   cursor: pointer;
   user-select: none;
