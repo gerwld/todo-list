@@ -1,9 +1,17 @@
-import React from 'react'
+import React from "react";
+import TaskForm from "../../TaskForm/TaskForm";
 
 const CreateNew = () => {
-  return (
-    <div>CreateNew</div>
-  )
-}
 
-export default CreateNew
+ const onSubmitCB = (obj) => {
+  console.log(obj);
+ }
+
+ return (
+  <div>
+   <TaskForm onSubmitCB={onSubmitCB} />
+  </div>
+ );
+};
+
+export default CreateNew;

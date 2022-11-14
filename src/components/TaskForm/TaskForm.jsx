@@ -2,15 +2,18 @@ import React, { useRef, useState } from "react";
 import { Form, Field } from "react-final-form";
 import { v4 as uuid } from "uuid";
 
-const onSubmit = async (obj) => {
- window.alert(JSON.stringify(obj, 0, 2));
-};
-
-const CreateNewForm = () => {
+const TaskForm = ({onSubmitCB}) => {
  let tag_input = useRef(null);
  let task_input = useRef(null);
  let [localTags, setTags] = useState([{ id: "dsvdsv", title: "Tag", isChecked: true }]);
  let [localTasks, setTasks] = useState([{ id: "dsvldsv", title: "Subask exm", isChecked: true }]);
+
+ const onSubmit = (obj, action) => {
+  let tags = [...localTags].filter(e => e.isChecked);
+  const newObj = {...obj, tags, tasks: localTasks};
+  onSubmitCB(newObj);
+  action.reset();
+ };
 
  const onAddLocalTag = () => {
   let id = uuid();
@@ -54,16 +57,16 @@ const CreateNewForm = () => {
  return (
   <Form
    onSubmit={onSubmit}
-   initialValues={{ status: "0", employed: false }}
-   render={({ handleSubmit, form, submitting, pristine, values }) => (
+   initialValues={{ status: "0" }}
+   render={({ handleSubmit, reset, form, submitting, pristine }) => (
     <form onSubmit={handleSubmit}>
      <label>
       <span>Task name:</span>
-      <Field component="input" type="text" name="title" placeholder="Go to work..." />
+      <Field component="input" type="text" name="title" placeholder="Go to work..." required />
      </label>
      <label>
       <span>Task description:</span>
-      <Field component="textarea" name="desc" rows="5" placeholder="At 6 AM " />
+      <Field component="textarea" name="desc" rows="5" placeholder="At 6 AM " required />
      </label>
 
      <h2>Status:</h2>
@@ -126,11 +129,11 @@ const CreateNewForm = () => {
        Reset
       </button>
      </div>
-     <pre>{JSON.stringify(values, 0, 2)}</pre>
+
     </form>
    )}
   />
  );
 };
 
-export default CreateNewForm;
+export default TaskForm;

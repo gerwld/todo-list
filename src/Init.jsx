@@ -1,6 +1,6 @@
 import React from "react";
 import Aside from "./components/Aside/Aside";
-import CreateNewForm from "./components/Modals/CreateNew/CreateNewForm";
+import CreateNew from "./components/Modals/CreateNew/CreateNew";
 import StatusSection from "./components/StatusSection/StatusSection";
 
 const Init = () => {
@@ -14,7 +14,7 @@ const Init = () => {
      <StatusSection title={"done"} stat={"done"} />
     </div>
 
-    <CreateNewForm />
+    <CreateNew />
    </div>
   </>
  );
