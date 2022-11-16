@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Form, Field } from "react-final-form";
 import { v4 as uuid } from "uuid";
+import s from "./s.module.css";
 
 const TaskForm = ({ onSubmitCB }) => {
  let tag_input = useRef(null);
@@ -14,6 +15,10 @@ const TaskForm = ({ onSubmitCB }) => {
   const newObj = { id, ...obj, tags, subtasks: localTasks, status: Number(obj.status) };
   onSubmitCB(newObj);
   action.reset();
+  setTags([]);
+  setTasks([]);
+  tag_input.current.value = "";
+  task_input.current.value = "";
  };
 
  const onAddLocalTag = () => {
@@ -59,75 +64,80 @@ const TaskForm = ({ onSubmitCB }) => {
   <Form
    onSubmit={onSubmit}
    initialValues={{ status: "0" }}
-   render={({ handleSubmit, reset, form, submitting, pristine }) => (
-    <form onSubmit={handleSubmit}>
-     <label>
-      <span>Task name:</span>
-      <Field component="input" type="text" name="title" placeholder="Go to work..." required />
-     </label>
-     <label>
-      <span>Task description:</span>
-      <Field component="textarea" name="desc" rows="5" placeholder="At 6 AM " required />
-     </label>
-
-     <h2>Status:</h2>
-     <label>
-      <span>To-do</span>
-      <Field component="input" type="radio" name="status" value="0" />
-     </label>
-     <label>
-      <span>In-Progress</span>
-      <Field component="input" type="radio" name="status" value="1" />
-     </label>
-     <label>
-      <span>Done</span>
-      <Field component="input" type="radio" name="status" value="2" />
-     </label>
-
-     <h2>Tags:</h2>
-
-     <input ref={tag_input} type="text" name="addtag" placeholder="Others" />
-     <button onClick={onAddLocalTag} type="button">
-      Create
-     </button>
-
-     <div className="tag_list">
-      {localTags.map((e) => (
-       <label key={e.id}>
-        <input type="checkbox" onChange={() => toggleSelect(e.id)} checked={e.isChecked} name={`tag_${e.title}`} />
-        {"  "}
-        {e.title}
+   render={({ handleSubmit, form }) => (
+    <form onSubmit={handleSubmit} className={s.form}>
+     <div className={s.group_1}>
+      <label>
+       <span>Task name:</span>
+       <Field component="input" type="text" name="title" placeholder="Go to work..." required />
+      </label>
+      <label>
+       <span>Task description:</span>
+       <Field component="textarea" name="desc" rows="5" placeholder="At 6 AM " required />
+      </label>
+      <div className={s.status}>
+       <h2>Status:</h2>
+       <label>
+        <span>To-do</span>
+        <Field component="input" type="radio" name="status" value="0" />
        </label>
-      ))}
-      + global tags
+       <label>
+        <span>In-Progress</span>
+        <Field component="input" type="radio" name="status" value="1" />
+       </label>
+       <label>
+        <span>Done</span>
+        <Field component="input" type="radio" name="status" value="2" />
+       </label>
+      </div>
      </div>
+     <div className={s.group_2}>
+      <h2 className={s.tags_title}>Tags:</h2>
 
-     <h2>Subtasks:</h2>
-     <input ref={task_input} type="text" name="addsubtask" placeholder="Others" />
-     <button onClick={onAddLocalTask} type="button">
-      Create
-     </button>
+      <div className={s.add_elem}>
+       <input ref={tag_input} type="text" name="addtag" placeholder="Others" />
+       <button onClick={onAddLocalTag} type="button">
+        Create
+       </button>
+      </div>
 
-     <div className="subtasks_list">
-      {localTasks.map((e) => (
-       <div key={e.id} className="task">
-        <label>
-         <input type="checkbox" onChange={() => toggleSelect(e.id, true)} name={e.title} checked={e.isChecked} /> {e.title}
+      <div className="tag_list">
+       {localTags.map((e) => (
+        <label key={e.id}>
+         <input type="checkbox" onChange={() => toggleSelect(e.id)} checked={e.isChecked} name={`tag_${e.title}`} />
+         {"  "}
+         {e.title}
         </label>
-        <button onClick={() => removeTask(e.id)} type="button">
-         Delete
-        </button>
-       </div>
-      ))}
-      + global tasks
+       ))}
+       + global tags
+      </div>
+
+      <h2>Subtasks:</h2>
+      <div className={s.add_elem}>
+       <input ref={task_input} type="text" name="addsubtask" placeholder="Others" />
+       <button onClick={onAddLocalTask} type="button">
+        Create
+       </button>
+      </div>
+
+      <div className="subtasks_list">
+       {localTasks.map((e) => (
+        <div key={e.id} className="task">
+         <label>
+          <input type="checkbox" onChange={() => toggleSelect(e.id, true)} name={e.title} checked={e.isChecked} /> {e.title}
+         </label>
+         <button onClick={() => removeTask(e.id)} type="button">
+          Delete
+         </button>
+        </div>
+       ))}
+      </div>
      </div>
 
-     <div className="buttons">
-      <button type="submit" disabled={submitting || pristine}>
-       Submit
-      </button>
-      <button type="button" onClick={form.reset} disabled={submitting || pristine}>
-       Reset
+     <div className={s.buttons}>
+      <button type="submit">Submit</button>
+      <button type="button" onClick={form.reset}>
+       Cancel
       </button>
      </div>
     </form>
