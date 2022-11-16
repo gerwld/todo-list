@@ -101,12 +101,12 @@ const TaskForm = ({ onSubmitCB }) => {
        </button>
       </div>
 
-      <div className="tag_list">
+      <div className={s.tag_list}>
        {localTags.map((e) => (
         <label key={e.id}>
          <input type="checkbox" onChange={() => toggleSelect(e.id)} checked={e.isChecked} name={`tag_${e.title}`} />
          {"  "}
-         {e.title}
+         <span>{e.title}</span>
         </label>
        ))}
        + global tags
@@ -120,11 +120,12 @@ const TaskForm = ({ onSubmitCB }) => {
        </button>
       </div>
 
-      <div className="subtasks_list">
+      <div className={s.subtasks_list}>
        {localTasks.map((e) => (
-        <div key={e.id} className="task">
+        <div key={e.id} className={s.task}>
          <label>
-          <input type="checkbox" onChange={() => toggleSelect(e.id, true)} name={e.title} checked={e.isChecked} /> {e.title}
+          <input type="checkbox" onChange={() => toggleSelect(e.id, true)} name={e.title} checked={e.isChecked} /> 
+          <span>{e.title}</span>
          </label>
          <button onClick={() => removeTask(e.id)} type="button">
           Delete

@@ -22,12 +22,6 @@ h2 {
  margin-top: 0;
 }
 
-label span {
- display: block;
- margin: 10px 0 5px;
- font-weight: 500;
-}
-
 .status label {
  display: flex;
  flex-direction: row-reverse;
@@ -55,12 +49,15 @@ textarea {
 }
 
 input[type="text"]:focus,
-textarea:focus {
- outline: none;
- border-color: blue;
+input[type="radio"]:focus,
+input[type="checkbox"]:focus,
+textarea:focus,
+button:focus {
+ outline: 2px solid #8282f0;
+ /* border-color: blue; */
 }
 
-button {
+.form button {
  min-height: 50px;
 }
 
@@ -82,3 +79,36 @@ button {
 .add_elem input {
  padding: 10px;
 }
+
+.subtasks_list .task,
+.tag_list label {
+ display: flex;
+ align-items: center;
+ padding: 5px;
+ margin: 5px 0;
+ border: 1px solid rgba(255, 255, 255, 0.2);
+ box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+ background-color: rgba(255, 255, 255, 0.158);
+
+ user-select: none;
+}
+
+.subtasks_list label {
+ display: flex;
+ align-items: center;
+}
+
+.subtasks_list span,
+.tag_list span {
+ margin: 0 0 0 8px;
+ font-size: 1.03em;
+ text-transform: capitalize;
+}
+
+.subtasks_list button {
+ height: unset;
+ min-height: unset;
+ padding: 5px;
+ margin: 0 0 0 auto;
+}
+

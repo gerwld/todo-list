@@ -117,12 +117,11 @@ label {
   justify-content: center;
 
   background-color: rgb(0, 0, 0, 0.4);
-  backdrop-filter: blur(3px);
 }
 
 .modal_content {
   position: relative;
-  min-width: 50vw;
+  min-width: 800px;
   padding: 40px;
   margin-top: 15vh;
   color: #fff;
@@ -135,3 +134,39 @@ label {
   right: 30px;
   top: 30px;
 }
+
+.modal {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.modal_open {
+  opacity: 1;
+  height: 100%;
+  pointer-events: all;
+  backdrop-filter: blur(3px);
+  transition: opacity 0.3s, backdrop-filter 0.1s 0.25s;
+}
+
+.modal_close {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s, height 0s 0.5s;
+ }
+ 
+
+.modal_content {
+  transform: translateY(-20px);
+  transition: transform 0.3s;
+ }
+
+ .modal_open .modal_content {
+  transform: translateY(0px);
+ }
+
+ .modal_close .modal_content {
+  transform: translateY(100px);
+ }

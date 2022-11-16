@@ -1,10 +1,10 @@
 import React from "react";
 import s from "./s.module.css";
 
-const Aside = ({ tags }) => {
+const Aside = ({ tags, toggleNew }) => {
  return (
   <aside className={s.aside}>
-   <button className={s.btn_create}>Create New Task</button>
+   <button onClick={toggleNew} className={s.btn_create}>Create New Task</button>
    <nav className={s.tags_nav}>
     <h2>Tags:</h2>
     <ul>
