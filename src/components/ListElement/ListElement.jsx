@@ -9,7 +9,6 @@ const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
   const onEdit = () => {
     if(id || id === 0) {
       disp(setEditmode(true, id));
-      console.log(id);
     }
   }
  return (

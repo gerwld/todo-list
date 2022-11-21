@@ -17,8 +17,10 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
   if (globalTags && currentObj) {
    let objTags = currentObj.tags;
    let allFalse = globalTags.filter((e) => !objTags.includes(e));
-   let allFalseObj = allFalse.map((e) => ({ id: uuid(), title: e, isChecked: false }));
-   let all = [...allFalseObj, ...objTags.map((e) => ({ id: uuid(), title: e, isChecked: true }))];
+   let all = [
+    ...allFalse.map((e) => ({ id: uuid(), title: e, isChecked: false })),
+    ...objTags.map((e) => ({ id: uuid(), title: e, isChecked: true })),
+   ];
    setTags(all);
   }
  }, [currentObj]);
