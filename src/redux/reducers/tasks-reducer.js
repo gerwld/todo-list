@@ -48,7 +48,7 @@ const tasksReducer = (state = init, action) => {
    return {
     ...state,
     isEditMode: action.isEditMode,
-    currentElement: action.id ? state.tasks.find(e => e.id === action.id) : state.currentElement
+    currentElement: action.id ? state.tasks.find(e => e.id === action.id) : null
    };
   case SET_CREATEMODE:
    return {

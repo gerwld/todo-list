@@ -7,23 +7,11 @@ import s from "./s.module.css";
 const TaskForm = ({ onSubmitCB, close, currentObj }) => {
  let tag_input = useRef(null);
  let task_input = useRef(null);
- let [localTags, setTags] = useState([{ id: "dfbdfb", title: "Tag", isChecked: true }]);
+ let [localTags, setTags] = useState([]);
  let [localTasks, setTasks] = useState([{ id: "dsvldsv", title: "Subask exm", isChecked: true }]);
  const { globalTags } = useSelector(({ tasks }) => ({
   globalTags: tasks.currentTags,
  }));
-
- useEffect(() => {
-  if (globalTags && currentObj) {
-   let objTags = currentObj.tags;
-   let allFalse = globalTags.filter((e) => !objTags.includes(e));
-   let all = [
-    ...allFalse.map((e) => ({ id: uuid(), title: e, isChecked: false })),
-    ...objTags.map((e) => ({ id: uuid(), title: e, isChecked: true })),
-   ];
-   setTags(all);
-  }
- }, [currentObj]);
 
  const onSubmit = (obj, action) => {
   let id = uuid();
@@ -76,11 +64,28 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
   setTasks(newObj);
  };
 
+ useEffect(() => {
+  if (globalTags && currentObj) {
+   let objTags = currentObj.tags;
+   let allFalse = globalTags.filter((e) => !objTags.includes(e));
+   let all = [
+    ...allFalse.map((e) => ({ id: uuid(), title: e, isChecked: false })),
+    ...objTags.map((e) => ({ id: uuid(), title: e, isChecked: true })),
+   ];
+   setTags(all);
+  }
+ }, [currentObj]);
+
+ useEffect(() => {
+  if(globalTags?.length) {
+   setTags(globalTags.map(e => ({id: uuid(), title: e, isChecked: false})))
+  }
+ }, [globalTags])
+
  return (
   <Form
    onSubmit={onSubmit}
    initialValues={{
-    status: "0",
     title: currentObj?.title || "",
     desc: currentObj?.desc || "",
     status: currentObj?.status.toString() || "0",
