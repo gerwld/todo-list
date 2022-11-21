@@ -1,7 +1,17 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setEditmode } from "../../redux/reducers/tasks-reducer";
 import s from "./s.module.css";
 
 const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
+  const disp = useDispatch();
+
+  const onEdit = () => {
+    if(id || id === 0) {
+      disp(setEditmode(true, id));
+      console.log(id);
+    }
+  }
  return (
   <article className={s.content}>
    <h2 className={s.title}>{title}</h2>
@@ -26,7 +36,7 @@ const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
    </div>
 
    <div className={s.actions}>
-    <button className={s.btn_edit}>Edit</button>
+    <button onClick={onEdit } className={s.btn_edit}>Edit</button>
    </div>
   </article>
  );

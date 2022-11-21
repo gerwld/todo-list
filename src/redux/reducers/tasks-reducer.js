@@ -6,7 +6,7 @@ const SET_CURRENT_TAGS = "todo-list/tasks-reducer/SET_CURRENT_TAGS";
 const ADD_TASK = "todo-list/tasks-reducer/ADD_TASK";
 
 export const setInit = (isInitialized) => ({ type: SET_INIT, isInitialized });
-export const setEditmode = (isEditMode) => ({ type: SET_EDITMODE, isEditMode });
+export const setEditmode = (isEditMode, id) => ({ type: SET_EDITMODE, isEditMode, id});
 export const setCreatemode = (isCreateMode) => ({ type: SET_CREATEMODE, isCreateMode });
 export const setCurrent = (currentElement) => ({ type: SET_CURRENT, currentElement });
 export const setCurrentTags = (currentTags) => ({ type: SET_CURRENT_TAGS, currentTags });
@@ -47,7 +47,8 @@ const tasksReducer = (state = init, action) => {
   case SET_EDITMODE:
    return {
     ...state,
-    isEditMode: action.isEditModea,
+    isEditMode: action.isEditMode,
+    currentElement: state.tasks.find(e => e.id === action.id)
    };
   case SET_CREATEMODE:
    return {
@@ -62,7 +63,8 @@ const tasksReducer = (state = init, action) => {
    case ADD_TASK:
     return {
       ...state,
-      tasks: [action.taskObj, ...state.tasks]
+      tasks: [action.taskObj, ...state.tasks],
+      isCreateMode: false
     }
   case SET_CURRENT_TAGS:
     return {

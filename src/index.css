@@ -122,11 +122,17 @@ label {
 .modal_content {
   position: relative;
   min-width: 800px;
-  padding: 40px;
+  padding: 30px;
   margin-top: 15vh;
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background-color: var(--main-color);
+}
+
+.modal_title {
+  font-size: 1.7rem;
+  line-height: 40px;
+  margin: 0 0 25px;
 }
 
 .btn_close {

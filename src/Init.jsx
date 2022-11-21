@@ -2,20 +2,27 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Aside from "./components/Aside/Aside";
 import CreateNew from "./components/Modals/CreateNew/CreateNew";
+import EditExist from "./components/Modals/EditExist/EditExist";
 import StatusSection from "./components/StatusSection/StatusSection";
-import { setCreatemode, setCurrentTags } from "./redux/reducers/tasks-reducer";
+import { setCreatemode, setCurrentTags, setEditmode } from "./redux/reducers/tasks-reducer";
 import onlyUnique from "./tools/onlyUnique";
 
 const Init = () => {
  const disp = useDispatch();
- const { tasks, tags, isCreateMode } = useSelector(({ tasks }) => ({
+ const { tasks, tags, isCreateMode, isEditMode, currentObj } = useSelector(({ tasks }) => ({
   tasks: tasks.tasks,
   tags: tasks.currentTags,
-  isCreateMode: tasks.isCreateMode
+  isCreateMode: tasks.isCreateMode,
+  isEditMode: tasks.isEditMode,
+  currentObj: tasks.currentElement
  }));
 
  const toggleCreate = () => {
   disp(setCreatemode(!isCreateMode));
+ }
+
+ const toggleEdit = () => {
+  disp(setEditmode(!isEditMode));
  }
 
  useEffect(() => {
@@ -37,6 +44,7 @@ const Init = () => {
     </div>
 
     <CreateNew toggleNew={toggleCreate} isCreateMode={isCreateMode} />
+    <EditExist toggleEdit={toggleEdit} isEditMode={isEditMode} currentObj={currentObj} />
    </div>
   </>
  );

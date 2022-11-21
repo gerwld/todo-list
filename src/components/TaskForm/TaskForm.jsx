@@ -1,13 +1,27 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Form, Field } from "react-final-form";
+import { useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
 import s from "./s.module.css";
 
-const TaskForm = ({ onSubmitCB }) => {
+const TaskForm = ({ onSubmitCB, close, currentObj }) => {
  let tag_input = useRef(null);
  let task_input = useRef(null);
- let [localTags, setTags] = useState([{ id: "dsvdsv", title: "Tag", isChecked: true }]);
+ let [localTags, setTags] = useState([{ id: "dfbdfb", title: "Tag", isChecked: true }]);
  let [localTasks, setTasks] = useState([{ id: "dsvldsv", title: "Subask exm", isChecked: true }]);
+ const { globalTags } = useSelector(({ tasks }) => ({
+  globalTags: tasks.currentTags,
+ }));
+
+ useEffect(() => {
+  if (globalTags && currentObj) {
+   let objTags = currentObj.tags;
+   let allFalse = globalTags.filter((e) => !objTags.includes(e));
+   let allFalseObj = allFalse.map((e) => ({ id: uuid(), title: e, isChecked: false }));
+   let all = [...allFalseObj, ...objTags.map((e) => ({ id: uuid(), title: e, isChecked: true }))];
+   setTags(all);
+  }
+ }, [currentObj]);
 
  const onSubmit = (obj, action) => {
   let id = uuid();
@@ -63,16 +77,21 @@ const TaskForm = ({ onSubmitCB }) => {
  return (
   <Form
    onSubmit={onSubmit}
-   initialValues={{ status: "0" }}
+   initialValues={{
+    status: "0",
+    title: currentObj?.title || "",
+    desc: currentObj?.desc || "",
+    status: currentObj?.status.toString() || "0",
+   }}
    render={({ handleSubmit, form }) => (
     <form onSubmit={handleSubmit} className={s.form}>
      <div className={s.group_1}>
       <label>
-       <span>Task name:</span>
+       <span className={s.l_title}>Task name:</span>
        <Field component="input" type="text" name="title" placeholder="Go to work..." required />
       </label>
       <label>
-       <span>Task description:</span>
+       <span className={s.l_title}>Task description:</span>
        <Field component="textarea" name="desc" rows="5" placeholder="At 6 AM " required />
       </label>
       <div className={s.status}>
@@ -124,7 +143,7 @@ const TaskForm = ({ onSubmitCB }) => {
        {localTasks.map((e) => (
         <div key={e.id} className={s.task}>
          <label>
-          <input type="checkbox" onChange={() => toggleSelect(e.id, true)} name={e.title} checked={e.isChecked} /> 
+          <input type="checkbox" onChange={() => toggleSelect(e.id, true)} name={e.title} checked={e.isChecked} />
           <span>{e.title}</span>
          </label>
          <button onClick={() => removeTask(e.id)} type="button">
@@ -137,7 +156,7 @@ const TaskForm = ({ onSubmitCB }) => {
 
      <div className={s.buttons}>
       <button type="submit">Submit</button>
-      <button type="button" onClick={form.reset}>
+      <button type="button" onClick={close}>
        Cancel
       </button>
      </div>
