@@ -14,7 +14,7 @@ const Aside = ({ tags, toggleNew }) => {
    </nav>
 
    <div className={s.log_group}>
-    <button onClick={toggleNew} className={s.btn_log}>Log Out</button>
+    <button className={s.btn_log}>Log Out</button>
    </div>
   </aside>
  );

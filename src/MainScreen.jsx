@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Aside from "./components/Aside/Aside";
-import Login from "./components/Login/Login";
 import CreateNew from "./components/Modals/CreateNew/CreateNew";
 import EditExist from "./components/Modals/EditExist/EditExist";
 import StatusSection from "./components/StatusSection/StatusSection";
 import { setCreatemode, setCurrentTags, setEditmode } from "./redux/reducers/tasks-reducer";
 import onlyUnique from "./tools/onlyUnique";
 
-const Init = () => {
+const MainScreen = () => {
  const disp = useDispatch();
  const { tasks, tags, isCreateMode, isEditMode, currentObj } = useSelector(({ tasks }) => ({
   tasks: tasks.tasks,
@@ -34,8 +33,6 @@ const Init = () => {
   }
  }, [tasks]);
 
- return <Login/>
-
  return (
   <>
    <div className="app_main">
@@ -53,4 +50,4 @@ const Init = () => {
  );
 };
 
-export default Init;
+export default MainScreen;
