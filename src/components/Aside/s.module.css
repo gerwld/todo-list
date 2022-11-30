@@ -1,5 +1,7 @@
 .aside {
  flex: 0 0 300px;
+ display: flex;
+ flex-direction: column;
  padding: 20px;
  background-color: var(--sec-color);
  color: #fff;
@@ -9,6 +11,7 @@
  color: #fff;
 }
 
+.btn_log,
 .btn_create {
  width: 100%;
  height: 60px;
@@ -18,6 +21,13 @@
  box-sizing: border-box;
 
  background-color: var(--main-color);
+}
+
+.log_group {
+ display: flex;
+ justify-content: stretch;
+ align-items: flex-end;
+ flex: 1;
 }
 
 .tags_nav {

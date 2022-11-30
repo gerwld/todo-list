@@ -135,7 +135,6 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
          <span>{e.title}</span>
         </label>
        ))}
-       + global tags
       </div>
 
       <h2>Subtasks:</h2>

@@ -1,0 +1,64 @@
+.login_screen {
+ width: 100vw;
+ height: 100vh;
+ min-width: 700px;
+ min-height: 600px;
+
+ display: flex;
+ align-items: flex-start;
+ justify-content: center;
+}
+
+.login_block {
+ width: 400px;
+ margin-top: 15vw;
+ padding: 15px;
+ color: #000;
+ background-color: #fff;
+}
+
+.links {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+}
+
+.links span {
+ margin-top: 30px;
+}
+
+.header {
+ font-size: 1.8rem;
+ font-weight: 600;
+ margin: 0.3em 0 0.6em;
+}
+
+.LoginForm input[type='password'] {
+ width: 100%;
+ padding: 0 10px;
+ display: block;
+ min-height: 50px;
+ border: 1px solid #e3e3e3;
+ box-sizing: border-box;
+ line-height: 1em;
+}
+
+.LoginForm label {
+ margin-top: 10px;
+}
+
+.l_title {
+ margin-top: 10px;
+ font-size: 0.9rem;
+ font-weight: 500;
+}
+
+.btn_sumbit {
+ width: 100%;
+ height: 50px;
+ margin: 10px 0;
+ font-weight: 500;
+ color: #fff;
+ background-color: var(--main-color);
+}

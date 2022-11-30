@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Aside from "./components/Aside/Aside";
+import Login from "./components/Login/Login";
 import CreateNew from "./components/Modals/CreateNew/CreateNew";
 import EditExist from "./components/Modals/EditExist/EditExist";
 import StatusSection from "./components/StatusSection/StatusSection";
@@ -32,6 +33,8 @@ const Init = () => {
    disp(setCurrentTags(uniqueTags));
   }
  }, [tasks]);
+
+ return <Login/>
 
  return (
   <>

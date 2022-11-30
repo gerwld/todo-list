@@ -12,6 +12,10 @@ const Aside = ({ tags, toggleNew }) => {
      {tags?.length ? tags.map((e) => <li key={`${e}_key`}>{e}</li>) : "No tags added."}
     </ul>
    </nav>
+
+   <div className={s.log_group}>
+    <button onClick={toggleNew} className={s.btn_log}>Log Out</button>
+   </div>
   </aside>
  );
 };
