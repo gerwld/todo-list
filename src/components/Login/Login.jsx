@@ -4,19 +4,18 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import s from "./s.module.css";
 
-const Login = () => {
- let isLogin = true;
+const Login = ({isReg}) => {
  return (
   <div className={s.login_screen}>
    <div className={s.login_block}>
-    <h1 className={s.header}>{isLogin ? 'Login' : 'Sign Up'}</h1>
+    <h1 className={s.header}>{isReg ? 'Sign Up' : 'Login'}</h1>
     
-    {!isLogin ? 
+    {isReg ? 
      <RegisterForm />:
      <><LoginForm />
      <div className={s.links}>
-      <NavLink to="forgot-password">Forgot password?</NavLink>
-      <span>Not a member? <NavLink to="sign-up">Sign Up</NavLink></span>
+      <a href="https://youtu.be/Sv8LHpezbLw" target='_blank'>Forgot password?</a>
+      <span>Not a member? <NavLink to="/sign-up">Sign Up</NavLink></span>
      </div></>
     }
    </div>

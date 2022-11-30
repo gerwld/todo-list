@@ -4,15 +4,15 @@ import Login from "../components/Login/Login";
 const publicRoutes = createHashRouter([
  {
   path: "*",
-  element: <Navigate to="/login" replace />,
+  element: <Navigate to="login" replace />,
  },
  {
   path: "/login",
   element: <Login />,
  },
  {
-  path: "/register",
-  element: <Login />,
+  path: "/sign-up",
+  element: <Login isReg={true} />,
  },
 ]);
 
