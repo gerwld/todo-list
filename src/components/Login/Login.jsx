@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { loginTC, registerTC } from "../../redux/reducers/auth-reducer";
 import LoginForm from "./LoginForm";
@@ -8,6 +8,9 @@ import s from "./s.module.css";
 
 const Login = ({isReg}) => {
  const disp = useDispatch();
+ const {error} = useSelector(({init}) => ({
+  error: init.currError
+ }))
  const onLogin = (res) => {
   disp(loginTC(res));
  }
@@ -20,6 +23,8 @@ const Login = ({isReg}) => {
   <div className={s.login_screen}>
    <div className={s.login_block}>
     <h1 className={s.header}>{isReg ? 'Sign Up' : 'Login'}</h1>
+
+    {error?.length ? error : ''}
     
     {isReg ? 
      <RegisterForm onRegister={onRegister} /> :
