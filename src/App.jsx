@@ -7,22 +7,20 @@ import { privateRoutes, publicRoutes } from "./routes/";
 
 const App = () => {
  const disp = useDispatch();
- const {authObj, isInit} = useSelector(({init}) => ({
+ const { authObj, isInit } = useSelector(({ init }) => ({
   authObj: init.authObj,
-  isInit: init.isInit
- }))
+  isInit: init.isInit,
+ }));
 
  useEffect(() => {
-
   //request imit. delay
   setTimeout(() => {
    disp(setInit(true));
-  }, 1000)
-  
- }, [])
+  }, 1000);
+ }, []);
 
  const routes = authObj ? privateRoutes : publicRoutes;
- return isInit ? <RouterProvider router={routes} /> : <Loader />
+ return isInit ? <RouterProvider router={routes} /> : <Loader />;
 };
 
 export default App;

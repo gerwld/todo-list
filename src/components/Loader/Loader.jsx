@@ -3,7 +3,7 @@ import s from "./s.module.css";
 
 const Loader = () => (
  <div className={s.loader}>
-  <div class={s.lds_ripple}>
+  <div className={s.lds_ripple}>
    <div></div>
    <div></div>
   </div>
