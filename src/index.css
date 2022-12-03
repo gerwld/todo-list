@@ -176,3 +176,24 @@ label {
  .modal_close .modal_content {
   transform: translateY(100px);
  }
+
+ .error-box {
+  display: block;
+  width: 100%;
+  padding: 10px;
+
+
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #252526;
+  text-align: center;
+  text-transform: lowercase;
+
+  box-sizing: border-box;
+  background-color: #ffd3d3;
+  border: 1px solid #ff9393;
+ }
+
+ .error-box::first-letter {
+  text-transform: uppercase;
+ }

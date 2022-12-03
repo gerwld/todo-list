@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { loginTC, registerTC } from "../../redux/reducers/auth-reducer";
+import { loginTC, registerTC, setError } from "../../redux/reducers/auth-reducer";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import s from "./s.module.css";
@@ -19,12 +19,17 @@ const Login = ({isReg}) => {
   disp(registerTC(res));
  }
 
+ useEffect(() => {
+
+  disp(setError(null));
+ },[])
+
  return (
   <div className={s.login_screen}>
    <div className={s.login_block}>
     <h1 className={s.header}>{isReg ? 'Sign Up' : 'Login'}</h1>
 
-    {error?.length ? error : ''}
+    {error?.length ? <span className="error-box">{error}</span> : ''}
     
     {isReg ? 
      <RegisterForm onRegister={onRegister} /> :

@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "homepage": "https://gerwld.github.io/todo-list",
   "author": "gerwld",
+  "proxy": "http://146.190.226.226:8000/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

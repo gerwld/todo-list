@@ -46,7 +46,15 @@ const authReducer = (state = init, action) => {
 
 export function loginTC(user) {
  return dispatch => {
-  console.log('login:', user);
+  AuthService.authUser({
+    "email": user.login,
+    "password": user.pass
+  }).then(data => {
+    console.log(data);
+  }).catch((data) => {
+    console.log(data);
+    dispatch(setError(data.message));
+  })
  }
 }
 
