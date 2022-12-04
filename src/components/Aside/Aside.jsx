@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./s.module.css";
 
-const Aside = ({ tags, toggleNew }) => {
+const Aside = ({ tags, toggleNew, onLogout }) => {
  return (
   <aside className={s.aside}>
    <button onClick={toggleNew} className={s.btn_create}>Create New Task</button>
@@ -14,7 +14,7 @@ const Aside = ({ tags, toggleNew }) => {
    </nav>
 
    <div className={s.log_group}>
-    <button className={s.btn_log}>Log Out</button>
+    <button type="button" className={s.btn_log} onClick={onLogout}>Log Out</button>
    </div>
   </aside>
  );

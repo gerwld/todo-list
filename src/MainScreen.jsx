@@ -4,6 +4,7 @@ import Aside from "./components/Aside/Aside";
 import CreateNew from "./components/Modals/CreateNew/CreateNew";
 import EditExist from "./components/Modals/EditExist/EditExist";
 import StatusSection from "./components/StatusSection/StatusSection";
+import { setLogout } from "./redux/reducers/auth-reducer";
 import { setCreatemode, setCurrentTags, setEditmode } from "./redux/reducers/tasks-reducer";
 import onlyUnique from "./tools/onlyUnique";
 
@@ -25,6 +26,9 @@ const MainScreen = () => {
   disp(setEditmode(!isEditMode));
  }
 
+ const onLogout = () => {
+  disp(setLogout());
+ }
  useEffect(() => {
   if(tasks?.length) {
    let allTags = tasks.map((e) => e.tags).flat(1);
@@ -36,7 +40,7 @@ const MainScreen = () => {
  return (
   <>
    <div className="app_main">
-    <Aside tags={tags} toggleNew={toggleCreate}/>
+    <Aside tags={tags} toggleNew={toggleCreate} onLogout={onLogout}/>
     <div className="app_sections">
      <StatusSection items={tasks} title={"to do"} stat={0} />
      <StatusSection items={tasks} title={"in-progress"} stat={1} />

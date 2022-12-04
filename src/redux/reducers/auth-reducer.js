@@ -13,8 +13,8 @@ export const setError = (body) => ({ type: SET_ERROR, body });
 const init = {
  isAuth: false,
  isInit: false,
- authObj: {null: 123},
- currError: null
+ authObj: null,
+ currError: null,
 };
 
 const authReducer = (state = init, action) => {
@@ -50,9 +50,9 @@ export function loginTC(user) {
     "email": user.login,
     "password": user.pass
   }).then(data => {
-    console.log(data);
+    dispatch(setLogin({...user, token: data.data}));
+    dispatch(setError(null));
   }).catch((data) => {
-    console.log(data);
     dispatch(setError(data.message));
   })
  }

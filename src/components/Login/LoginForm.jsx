@@ -6,8 +6,8 @@ const LoginForm = ({onLogin}) => (
   <Form
    initialValues={{remember: true}}
    onSubmit={onLogin}
-   render={({ handleSubmit, form }) => (
-    <form onSubmit={(e) => {handleSubmit(e); form.reset()}} className={s.LoginForm}>
+   render={({ handleSubmit }) => (
+    <form onSubmit={handleSubmit} className={s.LoginForm}>
      <label>
       <span className={s.l_title}>Login:</span>
       <Field component="input" type="email" name="login" placeholder="Login" required />
