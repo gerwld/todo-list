@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { loginTC, registerTC, setError } from "../../redux/reducers/auth-reducer";
+import { loginTC, registerTC } from "../../redux/reducers/auth-reducer";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import s from "./s.module.css";
@@ -18,11 +18,6 @@ const Login = ({isReg}) => {
  const onRegister = (res) => {
   disp(registerTC(res));
  }
-
- useEffect(() => {
-
-  disp(setError(null));
- },[])
 
  return (
   <div className={s.login_screen}>

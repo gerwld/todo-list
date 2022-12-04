@@ -5,10 +5,7 @@ export default class AuthService {
     return axios.post("/api/core/users", payload);
   }
   static async authUser(payload) {
-   return axios.get("/api/core/auth/basic/token", {
-     headers: {
-     "Authorization": payload
-     }
-   });
+    console.log(payload);
+   return axios.get("/api/core/auth/basic/token", payload);
  }
 }

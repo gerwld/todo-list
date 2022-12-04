@@ -13,7 +13,7 @@ export const setError = (body) => ({ type: SET_ERROR, body });
 const init = {
  isAuth: false,
  isInit: false,
- authObj: null,
+ authObj: {null: 123},
  currError: null
 };
 
