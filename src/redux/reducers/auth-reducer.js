@@ -4,17 +4,20 @@ const SET_LOGOUT = "todo-list/tasks-reducer/SET_LOGOUT";
 const SET_LOGIN = "todo-list/tasks-reducer/SET_LOGIN";
 const SET_INIT = "todo-list/tasks-reducer/SET_INIT";
 const SET_ERROR = "todo-list/tasks-reducer/SET_ERROR";
+const SET_MESSAGE = "todo-list/tasks-reducer/SET_MESSAGE";
 
 export const setLogout = () => ({ type: SET_LOGOUT });
 export const setInit = (isInit) => ({ type: SET_INIT, isInit });
 export const setLogin = (authObj) => ({ type: SET_LOGIN, authObj });
 export const setError = (body) => ({ type: SET_ERROR, body });
+export const setMessage = (body) => ({ type: SET_MESSAGE, body });
 
 const init = {
  isAuth: false,
  isInit: false,
  authObj: null,
  currError: null,
+ currMessage: null,
 };
 
 const authReducer = (state = init, action) => {
@@ -34,44 +37,52 @@ const authReducer = (state = init, action) => {
     ...state,
     authObj: action.authObj,
    };
-   case SET_ERROR:
-    return {
-     ...state,
-     currError: action.body,
-    };
+  case SET_ERROR:
+   return {
+    ...state,
+    currError: action.body,
+   };
+  case SET_MESSAGE:
+   return {
+    ...state,
+    currMessage: action.body,
+   };
   default:
    return state;
  }
 };
 
 export function loginTC(user) {
- return dispatch => {
+ return (dispatch) => {
   AuthService.authUser({
-    "email": user.login,
-    "password": user.pass
-  }).then(data => {
-    dispatch(setLogin({...user, token: data.data}));
-    dispatch(setError(null));
-  }).catch((data) => {
-    dispatch(setError(data.message));
+   email: user.login,
+   password: user.pass,
   })
- }
+   .then((data) => {
+    dispatch(setLogin({ ...user, token: data.data }));
+    dispatch(setError(null));
+   })
+   .catch((err) => {
+    dispatch(setError(err.message));
+   });
+ };
 }
 
 export function registerTC(user) {
-  return async dispatch => {
-   AuthService.createUser(
-    {
-      "email": user.login,
-      "password": user.pass,
-      "username": user.login
-    }).then(data => {
-      dispatch(setError(null));
-    }
-    ).catch(({response}) => {
-      dispatch(setError(response.data.message));
-    })
-  }
- }
+ return async (dispatch) => {
+  AuthService.createUser({
+   email: user.login,
+   password: user.pass,
+   username: user.login,
+  })
+   .then((data) => {
+    dispatch(setMessage(data.message));
+    dispatch(setError(null));
+   })
+   .catch(({ response }) => {
+    dispatch(setError(response.data.message));
+   });
+ };
+}
 
 export default authReducer;

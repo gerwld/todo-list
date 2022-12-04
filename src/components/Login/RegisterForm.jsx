@@ -21,7 +21,7 @@ const RegisterForm = ({onRegister}) => (
       <Field component="input" type="password" name="rep-pass" placeholder="********" required />
      </label>
      <label>
-      <Field component="input" type="checkbox" name="remember" required/>
+      <Field component="input" type="checkbox" name="remember" re/>
       <span className={s.l_title}>Agree with agreement and agreement agreed</span>
      </label>
      <button type="submit" className={s.btn_sumbit}>Sign Up</button>

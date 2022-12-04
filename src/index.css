@@ -33,6 +33,15 @@ body {
   min-width: 320px;
   min-height: 500px;
   overflow: hidden;
+  cursor: url(https://cdn.custom-cursor.com/db/4706/32/arrow2686.png) , default!important;
+}
+
+button, 
+input, 
+textarea,
+label, 
+a {
+  cursor: url(https://cdn.custom-cursor.com/db/4705/32/arrow2686.png) , pointer!important;
 }
 
 h1 {
