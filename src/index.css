@@ -33,6 +33,10 @@ body {
   min-width: 320px;
   min-height: 500px;
   overflow: hidden;
+}
+
+/* *,
+body {
   cursor: url(https://cdn.custom-cursor.com/db/4706/32/arrow2686.png) , default!important;
 }
 
@@ -42,7 +46,7 @@ textarea,
 label, 
 a {
   cursor: url(https://cdn.custom-cursor.com/db/4705/32/arrow2686.png) , pointer!important;
-}
+} */
 
 h1 {
   font-size: 3.2em;
@@ -186,6 +190,7 @@ label {
   transform: translateY(100px);
  }
 
+ .success-box,
  .error-box {
   display: block;
   width: 100%;
@@ -196,11 +201,19 @@ label {
   font-weight: 500;
   color: #252526;
   text-align: center;
-  text-transform: lowercase;
 
   box-sizing: border-box;
+ }
+
+ .error-box {
   background-color: #ffd3d3;
   border: 1px solid #ff9393;
+  text-transform: lowercase;
+ }
+
+ .success-box {
+  background-color: #dcffd3;
+  border: 1px solid #baffa9;
  }
 
  .error-box::first-letter {

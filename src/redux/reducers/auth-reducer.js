@@ -13,7 +13,6 @@ export const setError = (body) => ({ type: SET_ERROR, body });
 export const setMessage = (body) => ({ type: SET_MESSAGE, body });
 
 const init = {
- isAuth: false,
  isInit: false,
  authObj: null,
  currError: null,
@@ -35,6 +34,9 @@ const authReducer = (state = init, action) => {
   case SET_LOGIN:
    return {
     ...state,
+    isInit: true,
+    currError: null,
+    currMessage: null,
     authObj: action.authObj,
    };
   case SET_ERROR:
@@ -52,21 +54,20 @@ const authReducer = (state = init, action) => {
  }
 };
 
-export function loginTC(user) {
- return (dispatch) => {
-  AuthService.authUser({
-   email: user.login,
-   password: user.pass,
-  })
-   .then((data) => {
-    dispatch(setLogin({ ...user, token: data.data }));
-    dispatch(setError(null));
-   })
-   .catch((err) => {
-    dispatch(setError(err.message));
-   });
+
+export function initializeTC() {
+ return async (dispatch) => {
+  let session = localStorage.getItem("Bearer");
+  if (session?.length) {
+  await AuthService.getCurrentUser(session)
+    .then(({data}) => {
+     dispatch(setLogin({...data, token: session}));
+    });
+  }
+  await dispatch(setInit(true));
  };
 }
+
 
 export function registerTC(user) {
  return async (dispatch) => {
@@ -75,14 +76,43 @@ export function registerTC(user) {
    password: user.pass,
    username: user.login,
   })
-   .then((data) => {
-    dispatch(setMessage(data.message));
-    dispatch(setError(null));
+   .then(({ data }) => {
+    if (data?.email) {
+     dispatch(setError(null));
+     dispatch(setMessage(`You are successfully registered! Please login now.`));
+    }
    })
    .catch(({ response }) => {
     dispatch(setError(response.data.message));
    });
  };
 }
+
+
+export function loginTC(user) {
+  return (dispatch) => {
+   AuthService.authUser({
+    email: user.login,
+    password: user.pass,
+   })
+    .then((data) => {
+     if (data.data) {
+      user.remember && localStorage.setItem("Bearer", data.data);
+      dispatch(setLogin({ remember: user.remember, email: user.login, token: data.data }));
+     } else dispatch(setError("Unhandled error. Reload the page and try again."));
+    })
+    .catch(({ response }) => {
+     dispatch(setError(response.data.message));
+    });
+  };
+ }
+
+
+export function logoutTC() {
+  return (dispatch) => {
+   localStorage.setItem("Bearer", "");
+   dispatch(setLogout());
+  };
+ }
 
 export default authReducer;

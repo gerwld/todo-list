@@ -4,7 +4,7 @@ import Aside from "./components/Aside/Aside";
 import CreateNew from "./components/Modals/CreateNew/CreateNew";
 import EditExist from "./components/Modals/EditExist/EditExist";
 import StatusSection from "./components/StatusSection/StatusSection";
-import { setLogout } from "./redux/reducers/auth-reducer";
+import { logoutTC } from "./redux/reducers/auth-reducer";
 import { setCreatemode, setCurrentTags, setEditmode } from "./redux/reducers/tasks-reducer";
 import onlyUnique from "./tools/onlyUnique";
 
@@ -27,7 +27,7 @@ const MainScreen = () => {
  }
 
  const onLogout = () => {
-  disp(setLogout());
+  disp(logoutTC());
  }
  useEffect(() => {
   if(tasks?.length) {
