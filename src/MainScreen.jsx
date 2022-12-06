@@ -32,7 +32,9 @@ const MainScreen = () => {
  }
 
  useEffect(() => {
-  disp(getTasksTC());
+  setTimeout(() => {
+   disp(getTasksTC());
+  }, 200);
  }, [])
 
 

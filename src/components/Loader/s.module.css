@@ -9,6 +9,11 @@
   max-height: 100%;
 }
 
+.noMinMax {
+  max-height: unset;
+  height: unset;
+}
+
 .lds_ripple {
   display: inline-block;
   position: relative;

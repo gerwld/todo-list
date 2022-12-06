@@ -1,8 +1,8 @@
 import React from "react";
 import s from "./s.module.css";
 
-const Loader = () => (
- <div className={s.loader}>
+const Loader = ({noMinMax}) => (
+ <div className={`${s.loader} ${noMinMax ? s.noMinMax : ''}`}>
   <div className={s.lds_ripple}>
    <div></div>
    <div></div>
