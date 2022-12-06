@@ -15,20 +15,19 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
  }));
 
  const onSubmit = (obj, action) => {
-  let id = uuid();
   let tags = [...localTags].filter((e) => e.isChecked).map((e) => e.title);
-  const newObj = { id, ...obj, tags, subtasks: localTasks, status: Number(obj.status) };
+  const newObj = { ...obj, tags, subtasks: localTasks, status: Number(obj.status) };
+  if (currentObj?.id) newObj.id = currentObj.id;
   onSubmitCB(newObj);
-  if(isPending == false){
-   //animation delay
-   setTimeout(() => {
+
+  //animation delay
+  !isPending && setTimeout(() => {
     action.reset();
     setTags([]);
     setTasks([]);
-   }, 500)
-  }
-  tag_input.current.value = "";
-  task_input.current.value = "";
+    tag_input.current.value = "";
+    task_input.current.value = "";
+   }, 500);
  };
 
  const onAddLocalTag = () => {

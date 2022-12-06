@@ -82,7 +82,6 @@ const tasksReducer = (state = init, action) => {
     ...state,
     tasks: [action.taskObj, ...state.tasks],
     isCreateMode: false,
-    isSubmitPending: false,
    };
   case SET_TASKS:
    return {
@@ -116,17 +115,28 @@ const tasksReducer = (state = init, action) => {
 };
 
 export const setTaskTC = (obj) => {
- let newObj = { ...obj, dateCreated: Date.now() };
- return (dispatch) => {
-  dispatch(onSubmitPending(true));
-
-  TasksService.createTask(newObj)
-   .then(({data}) => {
+ return async (dispatch) => {
+  await dispatch(onSubmitPending(true));
+  await TasksService.createTask({ ...obj, dateCreated: Date.now() })
+   .then(({ data }) => {
     dispatch(addTask(data));
    })
    .catch((error) => {
     dispatch(setError(error.message));
    });
+  await dispatch(onSubmitPending(false));
+ };
+};
+
+export const editTaskTC = (newObj) => {
+ return async (dispatch) => {
+  dispatch(onSubmitPending(true));
+  await TasksService.updateTask(newObj).then((data) => {
+   dispatch(getTasksTC());
+  });
+
+  await dispatch(onSubmitPending(false));
+  await dispatch(setEditmode(false));
  };
 };
 
@@ -134,7 +144,9 @@ export const getTasksTC = () => {
  return (dispatch) => {
   TasksService.getTasks()
    .then(({ data }) => {
-    dispatch(setAllTasks(data));
+    console.log(data);
+    let arr = [...data].sort((a,b) => a.id - b.id);
+    dispatch(setAllTasks(arr));
    })
    .catch((error) => {
     dispatch(setInitTasks(true));
