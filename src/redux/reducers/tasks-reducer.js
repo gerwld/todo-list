@@ -1,7 +1,9 @@
 import TasksService from "../../services/TasksService";
 
 const SET_ERROR = "todo-list/tasks-reducer/SET_ERROR";
-const SET_INIT = "todo-list/tasks-reducer/SET_INIT";
+const SET_SUB_PENDING = "todo-list/tasks-reducer/SET_SUB_PENDING";
+const SET_INIT_TASKS = "todo-list/tasks-reducer/SET_INIT_TASKS";
+const ON_TASKS_LOGOUT = "todo-list/tasks-reducer/ON_TASKS_LOGOUT";
 const SET_EDITMODE = "todo-list/tasks-reducer/SET_EDITMODE";
 const SET_CREATEMODE = "todo-list/tasks-reducer/SET_CREATEMODE";
 const SET_TASKS = "todo-list/tasks-reducer/SET_TASKS";
@@ -10,16 +12,20 @@ const SET_CURRENT_TAGS = "todo-list/tasks-reducer/SET_CURRENT_TAGS";
 const ADD_TASK = "todo-list/tasks-reducer/ADD_TASK";
 
 export const setError = (body) => ({type: SET_ERROR, body});
-export const setInit = (isInit) => ({type: SET_INIT, isInit});
+export const setInitTasks = (isInit) => ({type: SET_INIT_TASKS, isInit});
 export const setEditmode = (isEditMode, id) => ({ type: SET_EDITMODE, isEditMode, id });
 export const setCreatemode = (isCreateMode) => ({ type: SET_CREATEMODE, isCreateMode });
 export const setCurrent = (currentElement) => ({ type: SET_CURRENT, currentElement });
 export const setCurrentTags = (currentTags) => ({ type: SET_CURRENT_TAGS, currentTags });
 export const addTask = (taskObj) => ({ type: ADD_TASK, taskObj });
 export const setAllTasks = (payload) => ({ type: SET_TASKS, payload });
+export const onTaskLogout = () => ({type: ON_TASKS_LOGOUT});
+export const onSubmitPending = (isPending) => ({type: SET_SUB_PENDING, isPending});
+
 
 const init = {
  isInit: false,
+ isSubmitPending: false,
  isEditMode: false,
  isCreateMode: false,
  currentElement: null,
@@ -45,11 +51,16 @@ const init = {
 
 const tasksReducer = (state = init, action) => {
  switch (action.type) {
-  case SET_INIT:
+  case SET_INIT_TASKS:
    return {
     ...state,
     isInit: action.isInit,
    };
+  case SET_SUB_PENDING: 
+    return {
+      ...state, 
+      isSubmitPending: action.isPending
+    }
   case SET_EDITMODE:
    return {
     ...state,
@@ -71,6 +82,7 @@ const tasksReducer = (state = init, action) => {
     ...state,
     tasks: [action.taskObj, ...state.tasks],
     isCreateMode: false,
+    isSubmitPending: false,
    };
   case SET_TASKS:
    return {
@@ -88,6 +100,15 @@ const tasksReducer = (state = init, action) => {
     ...state,
     currentError: action.body,
    };
+  case ON_TASKS_LOGOUT:
+    return {
+      ...state,
+      isEditMode: false,
+      isCreateMode: false,
+      currentTags: null,
+      currentError: null,
+      tasks: []
+     };
   default:
    return state;
  }
@@ -96,12 +117,13 @@ const tasksReducer = (state = init, action) => {
 export const setTaskTC = (obj) => {
  let newObj = { ...obj, dateCreated: Date.now() };
  return (dispatch) => {
+  dispatch(onSubmitPending(true));
+
   TasksService.createTask(newObj)
    .then(({data}) => {
     dispatch(addTask(data));
    })
    .catch((error) => {
-    dispatch(setInit(true));
     dispatch(setError(error.message));
    });
  };
@@ -114,6 +136,7 @@ export const getTasksTC = () => {
     dispatch(setAllTasks(data));
    })
    .catch((error) => {
+    dispatch(setInitTasks(true));
     dispatch(setError(error.message));
    });
  };

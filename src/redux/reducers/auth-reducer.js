@@ -1,14 +1,15 @@
 import axios from "axios";
 import AuthService from "../../services/AuthService";
+import { onTaskLogout } from "./tasks-reducer";
 
-const SET_LOGOUT = "todo-list/tasks-reducer/SET_LOGOUT";
-const SET_LOGIN = "todo-list/tasks-reducer/SET_LOGIN";
-const SET_INIT = "todo-list/tasks-reducer/SET_INIT";
-const SET_ERROR = "todo-list/tasks-reducer/SET_ERROR";
-const SET_MESSAGE = "todo-list/tasks-reducer/SET_MESSAGE";
+const SET_LOGOUT = "todo-list/auth-reducer/SET_LOGOUT";
+const SET_LOGIN = "todo-list/auth-reducer/SET_LOGIN";
+const SET_INIT_AUTH = "todo-list/auth-reducer/SET_INIT_AUTH";
+const SET_ERROR = "todo-list/auth-reducer/SET_ERROR";
+const SET_MESSAGE = "todo-list/auth-reducer/SET_MESSAGE";
 
 export const setLogout = () => ({ type: SET_LOGOUT });
-export const setInit = (isInit) => ({ type: SET_INIT, isInit });
+export const setInitAuth = (isInit) => ({ type: SET_INIT_AUTH, isInit });
 export const setLogin = (authObj) => ({ type: SET_LOGIN, authObj });
 export const setError = (body) => ({ type: SET_ERROR, body });
 export const setMessage = (body) => ({ type: SET_MESSAGE, body });
@@ -22,7 +23,7 @@ const init = {
 
 const authReducer = (state = init, action) => {
  switch (action.type) {
-  case SET_INIT:
+  case SET_INIT_AUTH:
    return {
     ...state,
     isInit: action.isInit,
@@ -30,12 +31,14 @@ const authReducer = (state = init, action) => {
   case SET_LOGOUT:
    return {
     ...state,
+    isInit: false,
+    currError: null,
+    currMessage: null,
     authObj: null,
    };
   case SET_LOGIN:
    return {
     ...state,
-    isInit: true,
     currError: null,
     currMessage: null,
     authObj: action.authObj,
@@ -66,7 +69,7 @@ export function getInitTC() {
      axios.defaults.headers.common = {'Authorization': `Bearer ${session}`};
     });
   }
-  await dispatch(setInit(true));
+  await dispatch(setInitAuth(true));
  };
 }
 
@@ -115,6 +118,7 @@ export function logoutTC() {
  return (dispatch) => {
   localStorage.removeItem("Bearer");
   dispatch(setLogout());
+  dispatch(onTaskLogout());
  };
 }
 

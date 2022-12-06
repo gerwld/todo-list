@@ -9,7 +9,8 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
  let task_input = useRef(null);
  let [localTags, setTags] = useState([]);
  let [localTasks, setTasks] = useState([{ id: "dsvldsv", title: "Subask exm", isChecked: true }]);
- const { globalTags } = useSelector(({ tasks }) => ({
+ const { globalTags, isPending } = useSelector(({ tasks }) => ({
+  isPending: tasks.isSubmitPending,
   globalTags: tasks.currentTags,
  }));
 
@@ -18,9 +19,14 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
   let tags = [...localTags].filter((e) => e.isChecked).map((e) => e.title);
   const newObj = { id, ...obj, tags, subtasks: localTasks, status: Number(obj.status) };
   onSubmitCB(newObj);
-  action.reset();
-  setTags([]);
-  setTasks([]);
+  if(isPending == false){
+   //animation delay
+   setTimeout(() => {
+    action.reset();
+    setTags([]);
+    setTasks([]);
+   }, 500)
+  }
   tag_input.current.value = "";
   task_input.current.value = "";
  };
@@ -159,7 +165,7 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
        ))}
       </div>
      </div>
-
+        {isPending ? 'Pending...' : ""}
      <div className={s.buttons}>
       <button type="submit">Submit</button>
       <button type="button" onClick={close}>

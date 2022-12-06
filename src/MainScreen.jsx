@@ -11,7 +11,8 @@ import onlyUnique from "./tools/onlyUnique";
 
 const MainScreen = () => {
  const disp = useDispatch();
- const { tasks, tags, isCreateMode, isEditMode, currentObj } = useSelector(({ tasks }) => ({
+ const { isInit, tasks, tags, isCreateMode, isEditMode, currentObj } = useSelector(({ tasks }) => ({
+  isInit: tasks.isInit,
   tasks: tasks.tasks,
   tags: tasks.currentTags,
   isCreateMode: tasks.isCreateMode,
@@ -49,8 +50,8 @@ const MainScreen = () => {
  return (
   <>
    <div className="app_main">
-    <Aside tags={tags} toggleNew={toggleCreate} onLogout={onLogout}/>
-    {tasks?.length ?
+    <Aside tags={tags} toggleNew={toggleCreate} onLogout={onLogout} isInit={isInit}/>
+    {tasks?.length || isInit ?
     <div className="app_sections">
      <StatusSection items={tasks} title={"to do"} stat={0} />
      <StatusSection items={tasks} title={"in-progress"} stat={1} />
