@@ -1,3 +1,4 @@
+import axios from "axios";
 import AuthService from "../../services/AuthService";
 
 const SET_LOGOUT = "todo-list/tasks-reducer/SET_LOGOUT";
@@ -55,13 +56,14 @@ const authReducer = (state = init, action) => {
 };
 
 
-export function initializeTC() {
+export function getInitTC() {
  return async (dispatch) => {
   let session = localStorage.getItem("Bearer");
   if (session?.length) {
   await AuthService.getCurrentUser(session)
     .then(({data}) => {
-     dispatch(setLogin({...data, token: session}));
+     dispatch(setLogin(data));
+     axios.defaults.headers.common = {'Authorization': `Bearer ${session}`};
     });
   }
   await dispatch(setInit(true));
@@ -83,36 +85,37 @@ export function registerTC(user) {
     }
    })
    .catch(({ response }) => {
-    dispatch(setError(response.data.message));
+    dispatch(setError(response.data.message || "Unhandled error"));
    });
  };
 }
 
 
 export function loginTC(user) {
-  return (dispatch) => {
-   AuthService.authUser({
-    email: user.login,
-    password: user.pass,
+ return (dispatch) => {
+  AuthService.authUser({
+   email: user.login,
+   password: user.pass,
+  })
+   .then(({ data }) => {
+    if (data) {
+     user.remember && localStorage.setItem("Bearer", data);
+     axios.defaults.headers.common = {'Authorization': `Bearer ${data}`};
+     dispatch(setLogin({ email: user.login }));
+    } else dispatch(setError("Unhandled error. Reload the page and try again."));
    })
-    .then((data) => {
-     if (data.data) {
-      user.remember && localStorage.setItem("Bearer", data.data);
-      dispatch(setLogin({ remember: user.remember, email: user.login, token: data.data }));
-     } else dispatch(setError("Unhandled error. Reload the page and try again."));
-    })
-    .catch(({ response }) => {
-     dispatch(setError(response.data.message));
-    });
-  };
- }
+   .catch(({ response }) => {
+    dispatch(setError(response.data.message || "Unhandled error"));
+   });
+ };
+}
 
 
 export function logoutTC() {
-  return (dispatch) => {
-   localStorage.setItem("Bearer", "");
-   dispatch(setLogout());
-  };
- }
+ return (dispatch) => {
+  localStorage.removeItem("Bearer");
+  dispatch(setLogout());
+ };
+}
 
 export default authReducer;

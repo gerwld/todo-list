@@ -1,13 +1,17 @@
-import { createHashRouter, Navigate } from "react-router-dom";
+import { createHashRouter } from "react-router-dom";
 import MainScreen from "../MainScreen";
 
 const privateRoutes = createHashRouter([
  {
-  path: "*",
-  element: <Navigate to="/" replace />,
+  path: "/login",
+  element: <MainScreen />,
  },
  {
   path: "/",
+  element: <MainScreen />,
+ },
+ {
+  path: "/tags/*",
   element: <MainScreen />,
  },
 ]);

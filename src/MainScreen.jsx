@@ -5,7 +5,7 @@ import CreateNew from "./components/Modals/CreateNew/CreateNew";
 import EditExist from "./components/Modals/EditExist/EditExist";
 import StatusSection from "./components/StatusSection/StatusSection";
 import { logoutTC } from "./redux/reducers/auth-reducer";
-import { setCreatemode, setCurrentTags, setEditmode } from "./redux/reducers/tasks-reducer";
+import { getTasksTC, setCreatemode, setCurrentTags, setEditmode } from "./redux/reducers/tasks-reducer";
 import onlyUnique from "./tools/onlyUnique";
 
 const MainScreen = () => {
@@ -29,6 +29,12 @@ const MainScreen = () => {
  const onLogout = () => {
   disp(logoutTC());
  }
+
+ useEffect(() => {
+  disp(getTasksTC());
+ }, [])
+
+
  useEffect(() => {
   if(tasks?.length) {
    let allTags = tasks.map((e) => e.tags).flat(1);

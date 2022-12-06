@@ -1,5 +1,6 @@
 import TasksService from "../../services/TasksService";
 
+const SET_TASKS = "todo-list/tasks-reducer/SET_TASKS";
 const SET_EDITMODE = "todo-list/tasks-reducer/SET_EDITMODE";
 const SET_CREATEMODE = "todo-list/tasks-reducer/SET_CREATEMODE";
 const SET_CURRENT = "todo-list/tasks-reducer/SET_CURRENT";
@@ -11,6 +12,7 @@ export const setCreatemode = (isCreateMode) => ({ type: SET_CREATEMODE, isCreate
 export const setCurrent = (currentElement) => ({ type: SET_CURRENT, currentElement });
 export const setCurrentTags = (currentTags) => ({ type: SET_CURRENT_TAGS, currentTags });
 export const addTask = (taskObj) => ({ type: ADD_TASK, taskObj });
+export const setAllTasks = (payload) => ({ type: SET_TASKS, payload });
 
 const init = {
  isEditMode: false,
@@ -59,6 +61,11 @@ const tasksReducer = (state = init, action) => {
     tasks: [action.taskObj, ...state.tasks],
     isCreateMode: false,
    };
+  case SET_TASKS:
+   return {
+    ...state,
+    tasks: payload
+   };
   case SET_CURRENT_TAGS:
    return {
     ...state,
@@ -73,11 +80,21 @@ export const setTaskTC = (obj) => {
  let newObj = { ...obj, dateCreated: Date.now() };
  return (dispatch) => {
   dispatch(addTask(newObj));
-  TasksService.createTask(newObj)
-   .catch((error) => {
-    dispatch(setError(error.message));
-   });
+  TasksService.createTask(newObj).catch((error) => {
+   dispatch(setError(error.message));
+  });
  };
+};
+
+export const getTasksTC = () => {
+ return (dispatch) => {
+  TasksService.getTasks()
+  .then((data) => {
+    console.log(data);
+  }).catch(error => {
+    console.log(error);
+  })
+ }
 };
 
 export default tasksReducer;

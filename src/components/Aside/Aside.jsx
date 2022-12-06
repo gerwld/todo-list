@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import s from "./s.module.css";
 
 const Aside = ({ tags, toggleNew, onLogout }) => {
@@ -8,8 +9,8 @@ const Aside = ({ tags, toggleNew, onLogout }) => {
    <nav className={s.tags_nav}>
     <h2>Tags:</h2>
     <ul>
-     <li className={s.current}>All</li>
-     {tags?.length ? tags.map((e) => <li key={`${e}_key`}>{e}</li>) : "No tags added."}
+     <li className={s.current}><NavLink to='/'>All</NavLink></li>
+     {tags?.length ? tags.map((e) => <li key={`${e}_key`}><NavLink to={`/tags/${e.replace(/ /g,"_")}`}>{e}</NavLink></li>) : "No tags added."}
     </ul>
    </nav>
 

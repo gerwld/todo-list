@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import Loader from "./components/Loader/Loader";
-import { initializeTC } from "./redux/reducers/auth-reducer";
+import { getInitTC } from "./redux/reducers/auth-reducer";
 import { privateRoutes, publicRoutes } from "./routes/";
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
 
  useEffect(() => {
   if(!isInit) {
-   disp(initializeTC());
+   disp(getInitTC());
   }
  }, [isInit]);
 
