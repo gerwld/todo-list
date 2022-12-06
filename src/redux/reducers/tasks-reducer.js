@@ -103,6 +103,7 @@ const tasksReducer = (state = init, action) => {
   case ON_TASKS_LOGOUT:
     return {
       ...state,
+      isInit: false,
       isEditMode: false,
       isCreateMode: false,
       currentTags: null,
