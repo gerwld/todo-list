@@ -10,7 +10,7 @@ export default class TasksService {
  static async updateTask(payload) {
   return axios.put(`/api/core/tasks/${payload.id}`, payload);
  }
- static async deleteTask(payload) {
-  return axios.delete(`/api/core/tasks/${payload.id}`);
+ static async deleteTask(id) {
+  return axios.delete(`/api/core/tasks/${id}`);
  }
 }

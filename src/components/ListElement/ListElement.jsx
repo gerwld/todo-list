@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setEditmode } from "../../redux/reducers/tasks-reducer";
+import { setEditmode, deleteTaskTC } from "../../redux/reducers/tasks-reducer";
 import s from "./s.module.css";
 
 const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
@@ -11,6 +11,13 @@ const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
       disp(setEditmode(true, id));
     }
   }
+
+  const onDelete = () => {
+    if(id || id === 0) {
+      disp(deleteTaskTC(id));
+    }
+  }
+
  return (
   <article className={s.content}>
    <h2 className={s.title}>{title}</h2>
@@ -35,7 +42,8 @@ const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
    </div>
 
    <div className={s.actions}>
-    <button onClick={onEdit } className={s.btn_edit}>Edit</button>
+    <button onClick={onEdit} className={s.btn_edit}>Edit</button>
+    <button onClick={onDelete} className={s.btn_edit}>Del</button>
    </div>
   </article>
  );

@@ -155,4 +155,14 @@ export const getTasksTC = () => {
  };
 };
 
+export const deleteTaskTC = (id) => {
+  return async dispatch => {
+  await TasksService.deleteTask(id).then(data => {
+    dispatch(getTasksTC());
+    }).catch(error => {
+
+    })
+  }
+}
+
 export default tasksReducer;

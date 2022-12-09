@@ -21,7 +21,8 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
   onSubmitCB(newObj);
 
   //animation delay
-  !isPending && setTimeout(() => {
+  !isPending &&
+   setTimeout(() => {
     action.reset();
     setTags([]);
     setTasks([]);
@@ -82,10 +83,10 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
  }, [currentObj]);
 
  useEffect(() => {
-  if(globalTags?.length) {
-   setTags(globalTags.map(e => ({id: uuid(), title: e, isChecked: false})))
+  if (globalTags?.length) {
+   setTags(globalTags.map((e) => ({ id: uuid(), title: e, isChecked: false })));
   }
- }, [globalTags])
+ }, [globalTags]);
 
  return (
   <Form
@@ -164,7 +165,7 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
        ))}
       </div>
      </div>
-        {isPending ? 'Pending...' : ""}
+     {isPending ? "Pending..." : ""}
      <div className={s.buttons}>
       <button type="submit">Submit</button>
       <button type="button" onClick={close}>

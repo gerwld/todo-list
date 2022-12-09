@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Aside from "./components/Aside/Aside";
 import Loader from "./components/Loader/Loader";
+import LoaderMid from "./components/Loader/LoaderMid";
 import CreateNew from "./components/Modals/CreateNew/CreateNew";
 import EditExist from "./components/Modals/EditExist/EditExist";
 import StatusSection from "./components/StatusSection/StatusSection";
@@ -59,6 +60,7 @@ const MainScreen = () => {
     </div> :
     <Loader />}
 
+     {/* //--- MODALS ---// */}
     <CreateNew toggleNew={toggleCreate} isCreateMode={isCreateMode} />
     <EditExist toggleEdit={toggleEdit} isEditMode={isEditMode} currentObj={currentObj} />
    </div>

@@ -66,3 +66,203 @@
     opacity: 0;
   }
 }
+
+/* mid loader */
+
+.content_block {
+  min-width: 150px;
+  height: 150px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: calc(50% - 75px);
+  left: calc(50% - 75px);
+
+  background-color: rgba(40, 44, 48, 0.7);
+  backdrop-filter: blur(5px);
+  border-radius: 25px;
+  user-select: none;
+  /* pointer-events: none; */
+}
+
+
+/* pending */
+
+.midLoader_pending .content {
+  color: official;
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.midLoader_pending .content div {
+  transform-origin: 40px 40px;
+  animation: midLoader_pending 1.2s linear infinite;
+}
+
+.midLoader_pending .content div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 37px;
+  width: 6px;
+  height: 18px;
+  border-radius: 20%;
+  background: #fff;
+}
+
+.midLoader_pending .content div:nth-child(1) {
+  transform: rotate(0deg);
+  animation-delay: -1.1s;
+}
+
+.midLoader_pending .content div:nth-child(2) {
+  transform: rotate(30deg);
+  animation-delay: -1s;
+}
+
+.midLoader_pending .content div:nth-child(3) {
+  transform: rotate(60deg);
+  animation-delay: -0.9s;
+}
+
+.midLoader_pending .content div:nth-child(4) {
+  transform: rotate(90deg);
+  animation-delay: -0.8s;
+}
+
+.midLoader_pending .content div:nth-child(5) {
+  transform: rotate(120deg);
+  animation-delay: -0.7s;
+}
+
+.midLoader_pending .content div:nth-child(6) {
+  transform: rotate(150deg);
+  animation-delay: -0.6s;
+}
+
+.midLoader_pending .content div:nth-child(7) {
+  transform: rotate(180deg);
+  animation-delay: -0.5s;
+}
+
+.midLoader_pending .content div:nth-child(8) {
+  transform: rotate(210deg);
+  animation-delay: -0.4s;
+}
+
+.midLoader_pending .content div:nth-child(9) {
+  transform: rotate(240deg);
+  animation-delay: -0.3s;
+}
+
+.midLoader_pending .content div:nth-child(10) {
+  transform: rotate(270deg);
+  animation-delay: -0.2s;
+}
+
+.midLoader_pending .content div:nth-child(11) {
+  transform: rotate(300deg);
+  animation-delay: -0.1s;
+}
+
+.midLoader_pending .content div:nth-child(12) {
+  transform: rotate(330deg);
+  animation-delay: 0s;
+}
+
+@keyframes midLoader_pending {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* pending end */
+
+/* error */
+
+.midLoader_error .content {
+  height: 65px;
+}
+
+.midLoader_error .content div:nth-child(1),
+.midLoader_error .content div:nth-child(2) {
+  width: 65px;
+  height: 6px;
+  background-color: #fff;
+}
+
+.midLoader_error .content div:nth-child(1) {
+  transform: translateY(28px) rotate(-45deg);
+}
+
+.midLoader_error .content div:nth-child(2) {
+  transform: translateY(24px) rotate(45deg);
+}
+
+/* error end */
+/* success */
+
+.midLoader_success .content {
+  height: 55px;
+  width: 60px;
+}
+
+.midLoader_success .content div:nth-child(1),
+.midLoader_success .content div:nth-child(2) {
+  width: 55px;
+  height: 6px;
+  background-color: #fff;
+}
+
+.midLoader_success .content div:nth-child(1) {
+  width: 30px;
+  transform: translateY(33px) rotate(45deg);
+}
+
+.midLoader_success .content div:nth-child(2) {
+  transform: translate(14px, 18px) rotate(-45deg);
+}
+
+/* success end */
+
+
+.midLoader_error .content,
+.midLoader_success .content {
+  animation: delay_dissapear;
+}
+
+@keyframes delay_dissapear {
+  0% {}
+}
+
+.mid_msg {
+  width: 100%;
+  padding: 5px 15px;
+  display: block;
+
+  line-height: 1.2em;
+
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.mid_msg span {
+  display: block;
+  white-space: nowrap;
+}
+
+.midLoader_success .mid_msg {
+  font-size: 16px;
+}
