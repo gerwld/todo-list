@@ -12,7 +12,7 @@ const Aside = ({ tags, toggleNew, onLogout, isInit }) => {
     <h2>Tags:</h2>
     <ul>
      <li className={s.current}><NavLink to='/'>All</NavLink></li>
-     {tags?.length ? tags.map((e) => <li key={`${e}_key`}><NavLink to={`/tags/${e.replace(/ /g,"_")}`}>{e}</NavLink></li>) : isInit ? 'All tags displayed.' : <Loader noMinMax={true}/>}
+     {tags?.length ? tags.map((e) => <li key={`${e}_key`}><NavLink to={`/tags/${e.replace(/ /g,"_")}`}>{e}</NavLink></li>) : isInit ? <span className={s.all_tags_msg}>All tags displayed.</span> : <Loader noMinMax={true}/>}
     </ul>
    </nav>
 

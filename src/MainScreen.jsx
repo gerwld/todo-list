@@ -43,14 +43,16 @@ const MainScreen = () => {
   setTimeout(() => {
    disp(getTasksTC());
   }, 200);
- }, [])
+ }, []);
 
 
  useEffect(() => {
-  if(tasks?.length) {
+  if (tasks?.length) {
    let allTags = tasks.map((e) => e.tags).flat(1);
    let uniqueTags = allTags.filter(onlyUnique);
    disp(setCurrentTags(uniqueTags));
+  } else {
+   disp(setCurrentTags([]));
   }
  }, [tasks]);
 
@@ -58,13 +60,20 @@ const MainScreen = () => {
   <>
    <div className="app_main">
     <Aside tags={tags} toggleNew={toggleCreate} onLogout={onLogout} isInit={isInit}/>
-    {tasks?.length || isInit ?
-    <div className="app_sections">
+    {tasks?.length ? 
+     <div className="app_sections">
      <StatusSection items={tasks} title={"to do"} stat={0} />
      <StatusSection items={tasks} title={"in-progress"} stat={1} />
      <StatusSection items={tasks} title={"done"} stat={2} />
     </div> :
+    isInit ? 
+    <div className="no_ts">
+     <h1>No tasks yet</h1>
+     <p>Be sure to add your first task</p>
+     <button onClick={toggleCreate}>Add task</button>
+    </div> :
     <Loader />}
+    
 
      {/* //--- MODALS ---// */}
     <CreateNew toggleNew={toggleCreate} isCreateMode={isCreateMode} />

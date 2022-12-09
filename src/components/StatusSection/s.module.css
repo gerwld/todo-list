@@ -34,3 +34,7 @@
  box-sizing: border-box;
  overflow: scroll;
 }
+
+.empty_sect {
+ text-align: center;
+}

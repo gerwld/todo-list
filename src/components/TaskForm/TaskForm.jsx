@@ -8,7 +8,7 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
  let tag_input = useRef(null);
  let task_input = useRef(null);
  let [localTags, setTags] = useState([]);
- let [localTasks, setTasks] = useState([{ id: "dsvldsv", title: "Subask exm", isChecked: true }]);
+ let [localTasks, setTasks] = useState([]);
  const { globalTags, isPending } = useSelector(({ tasks }) => ({
   isPending: tasks.isSubmitPending,
   globalTags: tasks.currentTags,
@@ -20,15 +20,13 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
   if (currentObj?.id) newObj.id = currentObj.id;
   onSubmitCB(newObj);
 
-  //animation delay
-  !isPending &&
-   setTimeout(() => {
+  if(!isPending) {
     action.reset();
     setTags([]);
     setTasks([]);
     tag_input.current.value = "";
     task_input.current.value = "";
-   }, 500);
+  }
  };
 
  const onAddLocalTag = () => {
@@ -83,10 +81,11 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
  }, [currentObj]);
 
  useEffect(() => {
-  if (globalTags?.length) {
-   setTags(globalTags.map((e) => ({ id: uuid(), title: e, isChecked: false })));
-  }
+   setTags(globalTags?.map((e) => ({ id: uuid(), title: e, isChecked: false })));
+  console.log(globalTags);
  }, [globalTags]);
+
+ useEffect(() => {}, [localTags]);
 
  return (
   <Form

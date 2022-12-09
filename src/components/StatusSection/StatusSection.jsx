@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ListElement from "../ListElement/ListElement";
-import s from "./s.module.css";
+import s from "./s.module.css"; 
+
 
 const StatusSection = ({ title, stat, items }) => {
  const [tasks, setTasks] = useState(null);
@@ -18,7 +19,7 @@ const StatusSection = ({ title, stat, items }) => {
      ? tasks.map((e) => (
         <ListElement key={e.id} obj={e} id={e.id} title={e.title} desc={e.desc} status={e.status} tags={e.tags} subtasks={e.subtasks} />
        ))
-     : "No items"}
+     : 'No items.'}
    </div>
   </section>
  );

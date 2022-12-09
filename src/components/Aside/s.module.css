@@ -93,3 +93,10 @@ li.current {
  background-color: #eff1f7;
  border: 2px solid #c8cbcd;
 }
+
+.all_tags_msg {
+ display: block;
+ text-align: center;
+ letter-spacing: 0.03em;
+ color: #c2c7cf;
+}
