@@ -6,14 +6,17 @@ const SET_INIT_TASKS = "todo-list/tasks-reducer/SET_INIT_TASKS";
 const ON_TASKS_LOGOUT = "todo-list/tasks-reducer/ON_TASKS_LOGOUT";
 const SET_EDITMODE = "todo-list/tasks-reducer/SET_EDITMODE";
 const SET_CREATEMODE = "todo-list/tasks-reducer/SET_CREATEMODE";
+const SET_DELMODE = "todo-list/tasks-reducer/SET_DELMODE";
 const SET_TASKS = "todo-list/tasks-reducer/SET_TASKS";
 const SET_CURRENT = "todo-list/tasks-reducer/SET_CURRENT";
 const SET_CURRENT_TAGS = "todo-list/tasks-reducer/SET_CURRENT_TAGS";
 const ADD_TASK = "todo-list/tasks-reducer/ADD_TASK";
 
+
 export const setError = (body) => ({type: SET_ERROR, body});
 export const setInitTasks = (isInit) => ({type: SET_INIT_TASKS, isInit});
 export const setEditmode = (isEditMode, id) => ({ type: SET_EDITMODE, isEditMode, id });
+export const setDeletemode = (isDeleteMode, id) => ({ type: SET_DELMODE, isDeleteMode, id });
 export const setCreatemode = (isCreateMode) => ({ type: SET_CREATEMODE, isCreateMode });
 export const setCurrent = (currentElement) => ({ type: SET_CURRENT, currentElement });
 export const setCurrentTags = (currentTags) => ({ type: SET_CURRENT_TAGS, currentTags });
@@ -28,6 +31,7 @@ const init = {
  isSubmitPending: false,
  isEditMode: false,
  isCreateMode: false,
+ isDeleteMode: false,
  currentElement: null,
  currentTags: null,
  selectedTag: null,
@@ -72,6 +76,12 @@ const tasksReducer = (state = init, action) => {
     ...state,
     isCreateMode: action.isCreateMode,
    };
+  case SET_DELMODE:
+    return {
+      ...state,
+      isDeleteMode: action.isDeleteMode,
+      pendingDeleteID: action.id ? action.id : null
+    }
   case SET_CURRENT:
    return {
     ...state,
@@ -144,7 +154,6 @@ export const getTasksTC = () => {
  return (dispatch) => {
   TasksService.getTasks()
    .then(({ data }) => {
-    console.log(data);
     let arr = [...data].sort((a,b) => a.id - b.id);
     dispatch(setAllTasks(arr));
    })
@@ -156,13 +165,17 @@ export const getTasksTC = () => {
 };
 
 export const deleteTaskTC = (id) => {
-  return async dispatch => {
-  await TasksService.deleteTask(id).then(data => {
+ return async (dispatch) => {
+  await TasksService.deleteTask(id)
+   .then(_ => {
     dispatch(getTasksTC());
-    }).catch(error => {
+   })
+   .catch((error) => {
+    dispatch(setError(error.message));
+   });
+  await dispatch(setDeletemode(false, null));
+ };
+};
 
-    })
-  }
-}
 
 export default tasksReducer;

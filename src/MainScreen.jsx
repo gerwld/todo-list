@@ -2,22 +2,24 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Aside from "./components/Aside/Aside";
 import Loader from "./components/Loader/Loader";
-import LoaderMid from "./components/Loader/LoaderMid";
 import CreateNew from "./components/Modals/CreateNew/CreateNew";
 import EditExist from "./components/Modals/EditExist/EditExist";
+import SubmitDelete from "./components/Modals/SubmitDelete/SubmitDelete";
 import StatusSection from "./components/StatusSection/StatusSection";
 import { logoutTC } from "./redux/reducers/auth-reducer";
-import { getTasksTC, setCreatemode, setCurrentTags, setEditmode } from "./redux/reducers/tasks-reducer";
+import { getTasksTC, setCreatemode, setCurrentTags, setDeletemode, setEditmode } from "./redux/reducers/tasks-reducer";
 import onlyUnique from "./tools/onlyUnique";
 
 const MainScreen = () => {
  const disp = useDispatch();
- const { isInit, tasks, tags, isCreateMode, isEditMode, currentObj } = useSelector(({ tasks }) => ({
+ const { isInit, tasks, tags, isCreateMode, isEditMode, isDeleteMode, pendingDeleteID, currentObj } = useSelector(({ tasks }) => ({
   isInit: tasks.isInit,
   tasks: tasks.tasks,
   tags: tasks.currentTags,
   isCreateMode: tasks.isCreateMode,
   isEditMode: tasks.isEditMode,
+  isDeleteMode: tasks.isDeleteMode,
+  pendingDeleteID: tasks.pendingDeleteID,
   currentObj: tasks.currentElement
  }));
 
@@ -27,6 +29,10 @@ const MainScreen = () => {
 
  const toggleEdit = () => {
   disp(setEditmode(!isEditMode));
+ }
+
+ const toggleDelete = () => {
+  disp(setDeletemode(!isDeleteMode));
  }
 
  const onLogout = () => {
@@ -63,6 +69,7 @@ const MainScreen = () => {
      {/* //--- MODALS ---// */}
     <CreateNew toggleNew={toggleCreate} isCreateMode={isCreateMode} />
     <EditExist toggleEdit={toggleEdit} isEditMode={isEditMode} currentObj={currentObj} />
+    <SubmitDelete toggleDelete={toggleDelete} isDeleteMode={isDeleteMode} pendingDeleteID={pendingDeleteID} />
    </div>
   </>
  );

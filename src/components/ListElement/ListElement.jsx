@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setEditmode, deleteTaskTC } from "../../redux/reducers/tasks-reducer";
+import { setEditmode, setDeletemode } from "../../redux/reducers/tasks-reducer";
 import s from "./s.module.css";
 
 const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
@@ -14,7 +14,7 @@ const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
 
   const onDelete = () => {
     if(id || id === 0) {
-      disp(deleteTaskTC(id));
+      disp(setDeletemode(true, id));
     }
   }
 
