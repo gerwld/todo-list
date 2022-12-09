@@ -1,26 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Aside from "./components/Aside/Aside";
 import Loader from "./components/Loader/Loader";
+import LoaderMid from "./components/Loader/LoaderMid";
 import CreateNew from "./components/Modals/CreateNew/CreateNew";
 import EditExist from "./components/Modals/EditExist/EditExist";
 import SubmitDelete from "./components/Modals/SubmitDelete/SubmitDelete";
 import StatusSection from "./components/StatusSection/StatusSection";
 import { logoutTC } from "./redux/reducers/auth-reducer";
-import { getTasksTC, setCreatemode, setCurrentTags, setDeletemode, setEditmode } from "./redux/reducers/tasks-reducer";
+import { getTasksTC, setCreatemode, setCurrentSort, setCurrentTags, setDeletemode, setEditmode } from "./redux/reducers/tasks-reducer";
 import onlyUnique from "./tools/onlyUnique";
 
 const MainScreen = () => {
  const disp = useDispatch();
- const { isInit, tasks, tags, isCreateMode, isEditMode, isDeleteMode, pendingDeleteID, currentObj } = useSelector(({ tasks }) => ({
+ const {currentTag} = useParams();
+ const [tagsLoader, setLoad] = useState(false);
+ const { isInit, tasks, sortedTasks, tags, isCreateMode, isEditMode, isDeleteMode, pendingDeleteID, currentObj, currentTagS } = useSelector(({ tasks }) => ({
   isInit: tasks.isInit,
   tasks: tasks.tasks,
+  sortedTasks: tasks.sortedTasks,
   tags: tasks.currentTags,
   isCreateMode: tasks.isCreateMode,
   isEditMode: tasks.isEditMode,
   isDeleteMode: tasks.isDeleteMode,
   pendingDeleteID: tasks.pendingDeleteID,
-  currentObj: tasks.currentElement
+  currentObj: tasks.currentElement,
+  currentTagS: tasks.currentTag
  }));
 
  const toggleCreate = () => {
@@ -45,13 +51,22 @@ const MainScreen = () => {
   }, 200);
  }, []);
 
+ useEffect(() => {
+  if(currentTagS !== currentTag) {
+   setLoad(true);
+   disp(setCurrentSort(currentTag?.replace(/_/g," ")));
+  }
+  //imitate pending for ux flow
+  setTimeout(() => setLoad(false), 300);
+ }, [currentTag])
+
 
  useEffect(() => {
   if (tasks?.length) {
    let allTags = tasks.map((e) => e.tags).flat(1);
    let uniqueTags = allTags.filter(onlyUnique);
    disp(setCurrentTags(uniqueTags));
-  } else {
+  } else if(isInit) {
    disp(setCurrentTags([]));
   }
  }, [tasks]);
@@ -59,12 +74,12 @@ const MainScreen = () => {
  return (
   <>
    <div className="app_main">
-    <Aside tags={tags} toggleNew={toggleCreate} onLogout={onLogout} isInit={isInit}/>
+    <Aside tags={tags} currentTag={currentTagS} toggleNew={toggleCreate} onLogout={onLogout} isInit={isInit}/>
     {tasks?.length ? 
      <div className="app_sections">
-     <StatusSection items={tasks} title={"to do"} stat={0} />
-     <StatusSection items={tasks} title={"in-progress"} stat={1} />
-     <StatusSection items={tasks} title={"done"} stat={2} />
+     <StatusSection items={sortedTasks || tasks} title={"to do"} stat={0} />
+     <StatusSection items={sortedTasks || tasks} title={"in-progress"} stat={1} />
+     <StatusSection items={sortedTasks || tasks} title={"done"} stat={2} />
     </div> :
     isInit ? 
     <div className="no_ts">
@@ -79,6 +94,8 @@ const MainScreen = () => {
     <CreateNew toggleNew={toggleCreate} isCreateMode={isCreateMode} />
     <EditExist toggleEdit={toggleEdit} isEditMode={isEditMode} currentObj={currentObj} />
     <SubmitDelete toggleDelete={toggleDelete} isDeleteMode={isDeleteMode} pendingDeleteID={pendingDeleteID} />
+
+    {tagsLoader ? <LoaderMid isPending={true} /> : ''}
    </div>
   </>
  );

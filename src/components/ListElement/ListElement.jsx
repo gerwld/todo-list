@@ -43,7 +43,7 @@ const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
 
    <div className={s.actions}>
     <button onClick={onEdit} className={s.btn_edit}>Edit</button>
-    <button onClick={onDelete} className={s.btn_edit}>Del</button>
+    <button onClick={onDelete} className={s.btn_del}>Del</button>
    </div>
   </article>
  );

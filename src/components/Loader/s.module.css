@@ -82,7 +82,7 @@
   top: calc(50% - 75px);
   left: calc(50% - 75px);
 
-  background-color: rgba(40, 44, 48, 0.7);
+  background-color: rgba(80, 88, 95, 0.7);
   backdrop-filter: blur(5px);
   border-radius: 25px;
   user-select: none;

@@ -10,6 +10,7 @@ const SET_DELMODE = "todo-list/tasks-reducer/SET_DELMODE";
 const SET_TASKS = "todo-list/tasks-reducer/SET_TASKS";
 const SET_CURRENT = "todo-list/tasks-reducer/SET_CURRENT";
 const SET_CURRENT_TAGS = "todo-list/tasks-reducer/SET_CURRENT_TAGS";
+const SET_CURRENT_SORT = "todo-list/tasks-reducer/SET_CURRENT_SORT";
 const ADD_TASK = "todo-list/tasks-reducer/ADD_TASK";
 
 
@@ -20,6 +21,7 @@ export const setDeletemode = (isDeleteMode, id) => ({ type: SET_DELMODE, isDelet
 export const setCreatemode = (isCreateMode) => ({ type: SET_CREATEMODE, isCreateMode });
 export const setCurrent = (currentElement) => ({ type: SET_CURRENT, currentElement });
 export const setCurrentTags = (currentTags) => ({ type: SET_CURRENT_TAGS, currentTags });
+export const setCurrentSort = (currentTag) => ({ type: SET_CURRENT_SORT, currentTag });
 export const addTask = (taskObj) => ({ type: ADD_TASK, taskObj });
 export const setAllTasks = (payload) => ({ type: SET_TASKS, payload });
 export const onTaskLogout = () => ({ type: ON_TASKS_LOGOUT });
@@ -34,7 +36,9 @@ const init = {
  isDeleteMode: false,
  currentElement: null,
  currentTags: null,
- currentError: null,
+ currentError: undefined,
+ currentTag: undefined,
+ sortedTasks: null,
  tasks: [
   // {
   //  id: "59h9bdf9n434",
@@ -103,6 +107,13 @@ const tasksReducer = (state = init, action) => {
     ...state,
     currentTags: action.currentTags,
    };
+  case SET_CURRENT_SORT:
+  let sortedTasks = state.tasks.filter((e) => e.tags.indexOf(action.currentTag) !== -1);
+  return {
+    ...state,
+    currentTag: action.currentTag,
+    sortedTasks: sortedTasks?.length ? sortedTasks : state.tasks
+  };
   case SET_ERROR:
    return {
     ...state,
@@ -164,15 +175,15 @@ export const getTasksTC = () => {
 };
 
 export const deleteTaskTC = (id) => {
- return async (dispatch) => {
-  await TasksService.deleteTask(id)
-   .then((_) => {
-    dispatch(getTasksTC());
+ return (dispatch) => {
+  TasksService.deleteTask(id)
+   .then(async (_) => {
+    await dispatch(getTasksTC());
+    await dispatch(setDeletemode(false, null));
    })
    .catch((error) => {
     dispatch(setError(error.message));
    });
-  await dispatch(setDeletemode(false, null));
  };
 };
 

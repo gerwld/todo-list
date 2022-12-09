@@ -81,8 +81,7 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
  }, [currentObj]);
 
  useEffect(() => {
-   setTags(globalTags?.map((e) => ({ id: uuid(), title: e, isChecked: false })));
-  console.log(globalTags);
+    setTags(globalTags?.map((e) => ({ id: uuid(), title: e, isChecked: false })));
  }, [globalTags]);
 
  useEffect(() => {}, [localTags]);
@@ -133,7 +132,7 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
       </div>
 
       <div className={s.tag_list}>
-       {localTags.map((e) => (
+       {localTags?.map((e) => (
         <label key={e.id}>
          <input type="checkbox" onChange={() => toggleSelect(e.id)} checked={e.isChecked} name={`tag_${e.title}`} />
          {"  "}

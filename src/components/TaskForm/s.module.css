@@ -68,7 +68,7 @@ input[type="radio"]:focus,
 input[type="checkbox"]:focus,
 textarea:focus,
 button:focus {
- outline: 2px solid #8282f0;
+ outline: 2px solid #82cff0;
  /* border-color: blue; */
 }
 
@@ -111,6 +111,7 @@ button:focus {
 .subtasks_list label {
  display: flex;
  align-items: center;
+ margin-right: 5px;
 }
 
 .subtasks_list span,

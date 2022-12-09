@@ -11,7 +11,7 @@ const privateRoutes = createHashRouter([
   element: <MainScreen />,
  },
  {
-  path: "/tags/*",
+  path: "/tags/:currentTag",
   element: <MainScreen />,
  },
 ]);

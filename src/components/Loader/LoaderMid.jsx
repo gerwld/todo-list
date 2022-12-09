@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./s.module.css";
 
-const LoaderMid = ({ isPending = false, isSucess = true }) => {
+const LoaderMid = ({ isPending, isSucess }) => {
  return (
   <div className={isPending ? s.midLoader_pending : isSucess ? s.midLoader_success : s.midLoader_error}>
    <div className={s.content_block}>

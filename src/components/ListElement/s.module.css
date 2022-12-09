@@ -25,9 +25,14 @@
  position: absolute;
 }
 
-.btn_edit {
+.btn_edit,
+.btn_del {
  padding: 5px 10px;
  font-size: 0.9rem;
+}
+
+.btn_del {
+ border-left: 1px solid var(--main-color)
 }
 
 .labels span {
