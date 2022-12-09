@@ -11,9 +11,9 @@ const Aside = ({ tags, toggleNew, onLogout, isInit, currentTag }) => {
    <nav className={s.tags_nav}>
     <h2>Tags:</h2>
     <ul>
-     <li className={s.current}><NavLink to='/'>All</NavLink></li>
+     <li className={!currentTag ? s.current : ''}><NavLink to='/'>All</NavLink></li>
      {tags?.length ? 
-     tags.map((e) => <li key={`${e}_key`}><NavLink to={`/tags/${e.replace(/ /g,"_")}`} className={currentTag === e ? s.active_sort : ''}>{e}</NavLink></li>) :
+     tags.map((e) => <li key={`${e}_key`} className={currentTag === e ? s.current : ''}><NavLink to={`/tags/${e.replace(/ /g,"_")}`}>{e}</NavLink></li>) :
       isInit ? 
       <span className={s.all_tags_msg}>All tags displayed.</span> :
       <Loader noMinMax={true}/>}

@@ -108,11 +108,11 @@ const tasksReducer = (state = init, action) => {
     currentTags: action.currentTags,
    };
   case SET_CURRENT_SORT:
-  let sortedTasks = state.tasks.filter((e) => e.tags.indexOf(action.currentTag) !== -1);
+  let sortedTasks = action.currentTag ? state.tasks.filter((e) => e.tags.indexOf(action.currentTag) !== -1) : state.tasks;
   return {
     ...state,
     currentTag: action.currentTag,
-    sortedTasks: sortedTasks?.length ? sortedTasks : state.tasks
+    sortedTasks: sortedTasks
   };
   case SET_ERROR:
    return {

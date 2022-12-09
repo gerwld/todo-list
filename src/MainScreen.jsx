@@ -13,6 +13,7 @@ import { getTasksTC, setCreatemode, setCurrentSort, setCurrentTags, setDeletemod
 import onlyUnique from "./tools/onlyUnique";
 
 const MainScreen = () => {
+ const nav = useNavigate();
  const disp = useDispatch();
  const {currentTag} = useParams();
  const [tagsLoader, setLoad] = useState(false);
@@ -54,11 +55,14 @@ const MainScreen = () => {
  useEffect(() => {
   if(currentTagS !== currentTag) {
    setLoad(true);
-   disp(setCurrentSort(currentTag?.replace(/_/g," ")));
-  }
+  } disp(setCurrentSort(currentTag?.replace(/_/g," ")));
   //imitate pending for ux flow
-  setTimeout(() => setLoad(false), 300);
- }, [currentTag])
+  setTimeout(() => setLoad(false), 200);
+ }, [currentTag, tasks])
+
+ useEffect(() => {
+  !sortedTasks?.length && nav('/');
+ }, [sortedTasks, currentTag])
 
 
  useEffect(() => {

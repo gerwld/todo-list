@@ -8,12 +8,17 @@ const privateRoutes = createHashRouter([
  },
  {
   path: "/",
-  element: <MainScreen />,
+  element: <MainScreen />
  },
  {
   path: "/tags/:currentTag",
   element: <MainScreen />,
  },
+ {
+  path: "/tags/",
+  element: <MainScreen />,
+ },
 ]);
 
 export default privateRoutes;
+
