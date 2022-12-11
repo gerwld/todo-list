@@ -1,50 +1,41 @@
+import { Field, Form } from "react-final-form";
 import React, { useEffect, useRef, useState } from "react";
-import { Form, Field } from "react-final-form";
+
+import s from "./s.module.css";
 import { useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
-import s from "./s.module.css";
 
 const TaskForm = ({ onSubmitCB, close, currentObj }) => {
- let tag_input = useRef(null);
- let task_input = useRef(null);
+ let tag_input = useRef(null), task_input = useRef(null);
  let [localTags, setTags] = useState([]);
  let [localTasks, setTasks] = useState([]);
- const { globalTags, isPending } = useSelector(({ tasks }) => ({
+ const { globalTags, isPending, isEditMode } = useSelector(({ tasks }) => ({
   isPending: tasks.isSubmitPending,
   globalTags: tasks.currentTags,
+  isEditMode: tasks.isEditMode
  }));
 
- const onSubmit = (obj, action) => {
-  let tags = [...localTags].filter((e) => e.isChecked).map((e) => e.title);
+ const onSubmit = (obj) => {
+  let tags = [...localTags].filter((e) => e.checked).map((e) => e.title);
   const newObj = { ...obj, tags, subtasks: localTasks, status: Number(obj.status) };
   if (currentObj?.id) newObj.id = currentObj.id;
   onSubmitCB(newObj);
-
-  if(!isPending) {
-    action.reset();
-    setTags([]);
-    setTasks([]);
-    tag_input.current.value = "";
-    task_input.current.value = "";
-  }
  };
 
  const onAddLocalTag = () => {
-  let id = uuid();
   let val = tag_input.current.value.trim().toLowerCase();
   const isExist = localTags.some((e) => e.title === val);
   if (val && !isExist) {
-   setTags([{ id, title: val, isChecked: true }, ...localTags]);
+   setTags([{ id: uuid(), title: val, checked: true }, ...localTags]);
   }
   tag_input.current.value = "";
  };
 
  const onAddLocalTask = () => {
-  let id = uuid();
   let val = task_input.current.value.trim().toLowerCase();
   const isExist = localTasks.some((e) => e.title === val);
   if (val && !isExist) {
-   setTasks([{ id, title: val, isChecked: false }, ...localTasks]);
+   setTasks([{ id: uuid(), title: val, checked: false }, ...localTasks]);
   }
   task_input.current.value = "";
  };
@@ -56,8 +47,7 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
   } else newObj = [...localTags];
 
   let i = newObj.findIndex((e) => e.id === id);
-  newObj[i].isChecked = !newObj[i].isChecked;
-
+  newObj[i] = {...newObj[i], checked: !newObj[i].checked};
   if (isTask) {
    setTasks(newObj);
   } else setTags(newObj);
@@ -68,20 +58,29 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
   setTasks(newObj);
  };
 
+
+//  SIDE EFFECTS
+
  useEffect(() => {
   if (globalTags && currentObj) {
    let objTags = currentObj.tags;
    let allFalse = globalTags.filter((e) => !objTags.includes(e));
    let all = [
-    ...allFalse.map((e) => ({ id: uuid(), title: e, isChecked: false })),
-    ...objTags.map((e) => ({ id: uuid(), title: e, isChecked: true })),
+    ...allFalse.map((e) => ({ id: uuid(), title: e, checked: false })),
+    ...objTags.map((e) => ({ id: uuid(), title: e, checked: true })),
    ];
    setTags(all);
   }
+  if(currentObj?.subtasks.length && isEditMode) {
+    setTasks([...currentObj.subtasks]);
+  }
+
+  tag_input.current.value = "";
+  task_input.current.value = "";
  }, [currentObj]);
 
  useEffect(() => {
-    setTags(globalTags?.map((e) => ({ id: uuid(), title: e, isChecked: false })));
+    setTags(globalTags?.map((e) => ({ id: uuid(), title: e, checked: false })));
  }, [globalTags]);
 
  useEffect(() => {}, [localTags]);
@@ -134,7 +133,7 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
       <div className={s.tag_list}>
        {localTags?.map((e) => (
         <label key={e.id}>
-         <input type="checkbox" onChange={() => toggleSelect(e.id)} checked={e.isChecked} name={`tag_${e.title}`} />
+         <input type="checkbox" onChange={() => toggleSelect(e.id)} checked={e.checked} name={`tag_${e.title}`} />
          {"  "}
          <span>{e.title}</span>
         </label>
@@ -153,7 +152,7 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
        {localTasks.map((e) => (
         <div key={e.id} className={s.task}>
          <label>
-          <input type="checkbox" onChange={() => toggleSelect(e.id, true)} name={e.title} checked={e.isChecked} />
+          <input type="checkbox" onChange={() => toggleSelect(e.id, true)} name={e.title} checked={e.checked} />
           <span>{e.title}</span>
          </label>
          <button onClick={() => removeTask(e.id)} type="button">
@@ -163,7 +162,7 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
        ))}
       </div>
      </div>
-     {isPending ? "Pending..." : ""}
+     {isPending ? <span className={s.pending}>Pending...</span> : ""}
      <div className={s.buttons}>
       <button type="submit">Submit</button>
       <button type="button" onClick={close}>
