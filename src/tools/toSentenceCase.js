@@ -4,7 +4,7 @@ function toSentenceCase(text) {
 
  //basic checks
  if (!text && text !== 0) return "Wrong argument";
- else text = text.toString();
+ else text = text.toString().toLowerCase();
 
  //if string contains symbol split, then map with strClearAndFrUpper
  for (let sym of symbs) {
@@ -17,7 +17,10 @@ function toSentenceCase(text) {
  // if doesn't contain any from [symbs]
  if (res.length === 0) res = strClearAndFrUpper(text + ".");
 
- return typeof res === "object" ? res.join(" ") : res;
+ //without last dot
+ return typeof res === "object" ? res.join(" ").slice(0, -1) : res.slice(0, -1);
+ //with it
+ // return typeof res === "object" ? res.join(" ").slice(0, -1) : res.slice(0, -1);
 }
 
 function strClearAndFrUpper(str) {

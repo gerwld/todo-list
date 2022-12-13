@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setEditmode, setDeletemode } from "../../redux/reducers/tasks-reducer";
 import toSentenceCase from "../../tools/toSentenceCase";
+import toTitleCase from "../../tools/toTitleCase";
 import s from "./s.module.css";
 
 const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
@@ -21,7 +22,7 @@ const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
 
  return (
   <article className={s.content}>
-   <h2 className={s.title}>{title}</h2>
+   <h2 className={s.title}>{toTitleCase(title)}</h2>
 
    <div className={`${s.labels} lables`}>
    {tags?.length

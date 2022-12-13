@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import s from "./s.module.css";
 import { useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
+import toTitleCase from "../../tools/toTitleCase";
+import toSentenceCase from "../../tools/toSentenceCase";
 
 const TaskForm = ({ onSubmitCB, close, currentObj }) => {
  let tag_input = useRef(null), task_input = useRef(null);
@@ -89,8 +91,8 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
   <Form
    onSubmit={onSubmit}
    initialValues={{
-    title: currentObj?.title || "",
-    desc: currentObj?.desc || "",
+    title: currentObj?.title ? toTitleCase(currentObj.title) : "",
+    desc: currentObj?.desc ? toSentenceCase(currentObj.desc) : "",
     status: currentObj?.status.toString() || "0",
    }}
    render={({ handleSubmit, form }) => (
