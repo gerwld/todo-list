@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { setEditmode, setDeletemode } from "../../redux/reducers/tasks-reducer";
+import toSentenceCase from "../../tools/toSentenceCase";
 import s from "./s.module.css";
 
 const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
@@ -30,7 +31,7 @@ const ListElement = ({ id, title, desc, status, tags, subtasks }) => {
     : ""}
     </div>
 
-   <p className={s.desc}>{desc}</p>
+   <p className={s.desc}>{toSentenceCase(desc)}</p>
 
    <div className={s.sub_tasks}>
    {subtasks?.length ? subtasks.map(e => 

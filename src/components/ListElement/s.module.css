@@ -52,6 +52,7 @@
 
 .sub_task {
  margin-right: 7px;
+ text-transform: capitalize;
 }
 
 .sub_task:nth-last-child(1) {
