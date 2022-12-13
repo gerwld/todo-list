@@ -19,8 +19,7 @@ function toSentenceCase(text) {
 
  //without last dot
  return typeof res === "object" ? res.join(" ").slice(0, -1) : res.slice(0, -1);
- //with it
- // return typeof res === "object" ? res.join(" ").slice(0, -1) : res.slice(0, -1);
+ //with it - return typeof res === "object" ? res.join(" ") : res;
 }
 
 function strClearAndFrUpper(str) {

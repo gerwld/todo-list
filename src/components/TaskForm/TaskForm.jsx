@@ -75,7 +75,7 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
   }
   if(currentObj?.subtasks.length && isEditMode) {
     setTasks([...currentObj.subtasks]);
-  }
+  } else if (isEditMode) setTasks([]);
 
   tag_input.current.value = "";
   task_input.current.value = "";
