@@ -12,10 +12,11 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
  let tag_input = useRef(null), task_input = useRef(null);
  let [localTags, setTags] = useState([]);
  let [localTasks, setTasks] = useState([]);
- const { globalTags, isPending, isEditMode } = useSelector(({ tasks }) => ({
+ const { globalTags, isPending, isEditMode, isCreateMode} = useSelector(({ tasks }) => ({
   isPending: tasks.isSubmitPending,
   globalTags: tasks.currentTags,
   isEditMode: tasks.isEditMode,
+  isCreateMode: tasks.isCreateMode
  }));
 
  const onSubmit = (obj) => {
@@ -95,8 +96,8 @@ useEffect(() => {
  useEffect(() => {
   if(currentObj?.subtasks.length && isEditMode) {
     setTasks([...currentObj.subtasks]);
-  } else setTasks([]);
- }, [currentObj, isPending]);
+  } else if(!isCreateMode) setTasks([]);
+ }, [currentObj, isCreateMode]);
 
  useEffect(() => {
     setTags(globalTags?.map((e) => ({ id: uuid(), title: e, checked: false })));
