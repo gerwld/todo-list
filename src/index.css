@@ -182,7 +182,7 @@ label {
   opacity: 0;
   height: 0;
   overflow: hidden;
-  transition: opacity 0.3s, height 0s 0.5s;
+  transition: opacity 0.18s, height 0s 0.5s;
  }
  
 
@@ -197,6 +197,7 @@ label {
 
  .modal_close .modal_content {
   transform: translateY(100px);
+  transition: transform 0.18s;
  }
 
  .success-box,
