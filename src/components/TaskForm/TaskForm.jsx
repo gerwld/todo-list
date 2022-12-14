@@ -4,22 +4,26 @@ import React, { useEffect, useRef, useState } from "react";
 import s from "./s.module.css";
 import { useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
-import toTitleCase from "../../tools/toTitleCase";
-import toSentenceCase from "../../tools/toSentenceCase";
 
 const TaskForm = ({ onSubmitCB, close, currentObj }) => {
+ let resetForm = null;
  let tag_input = useRef(null), task_input = useRef(null);
  let [localTags, setTags] = useState([]);
  let [localTasks, setTasks] = useState([]);
  const { globalTags, isPending, isEditMode } = useSelector(({ tasks }) => ({
   isPending: tasks.isSubmitPending,
   globalTags: tasks.currentTags,
-  isEditMode: tasks.isEditMode
+  isEditMode: tasks.isEditMode,
  }));
 
  const onSubmit = (obj) => {
   let tags = [...localTags].filter((e) => e.checked).map((e) => e.title);
-  const newObj = { ...obj, tags, subtasks: localTasks, status: Number(obj.status) };
+  const newObj = {
+   ...obj,
+   tags,
+   subtasks: localTasks,
+   status: Number(obj.status),
+  };
   if (currentObj?.id) newObj.id = currentObj.id;
   onSubmitCB(newObj);
  };
@@ -63,6 +67,15 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
 
 //  SIDE EFFECTS
 
+useEffect(() => {
+  //form reset after submit
+  if(resetForm && !isPending) {
+    resetForm();
+    tag_input.current.value = "";
+    task_input.current.value = "";
+  }
+ }, [resetForm, isPending])
+
  useEffect(() => {
   if (globalTags && currentObj) {
    let objTags = currentObj.tags;
@@ -75,10 +88,8 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
   }
   if(currentObj?.subtasks.length && isEditMode) {
     setTasks([...currentObj.subtasks]);
-  } else if (isEditMode) setTasks([]);
+  } else setTasks([]);
 
-  tag_input.current.value = "";
-  task_input.current.value = "";
  }, [currentObj]);
 
  useEffect(() => {
@@ -89,90 +100,93 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
 
  return (
   <Form
-   onSubmit={onSubmit}
+  onSubmit={onSubmit}
    initialValues={{
-    title: currentObj?.title ? toTitleCase(currentObj.title) : "",
-    desc: currentObj?.desc ? toSentenceCase(currentObj.desc) : "",
+    title: currentObj?.title || "",
+    desc: currentObj?.desc || "",
     status: currentObj?.status.toString() || "0",
    }}
-   render={({ handleSubmit, form }) => (
-    <form onSubmit={handleSubmit} className={s.form}>
-     <div className={s.group_1}>
-      <label>
-       <span className={s.l_title}>Task name:</span>
-       <Field component="input" type="text" name="title" placeholder="Go to work..." required />
-      </label>
-      <label>
-       <span className={s.l_title}>Task description:</span>
-       <Field component="textarea" name="desc" rows="5" placeholder="At 6 AM " required />
-      </label>
-      <div className={s.status}>
-       <h2>Status:</h2>
-       <label>
-        <span>To-do</span>
-        <Field component="input" type="radio" name="status" value="0" />
-       </label>
-       <label>
-        <span>In-Progress</span>
-        <Field component="input" type="radio" name="status" value="1" />
-       </label>
-       <label>
-        <span>Done</span>
-        <Field component="input" type="radio" name="status" value="2" />
-       </label>
-      </div>
-     </div>
-     <div className={s.group_2}>
-      <h2 className={s.tags_title}>Tags:</h2>
-
-      <div className={s.add_elem}>
-       <input ref={tag_input} type="text" name="addtag" placeholder="Others" />
-       <button onClick={onAddLocalTag} type="button">
-        Create
-       </button>
-      </div>
-
-      <div className={s.tag_list}>
-       {localTags?.map((e) => (
-        <label key={e.id}>
-         <input type="checkbox" onChange={() => toggleSelect(e.id)} checked={e.checked} name={`tag_${e.title}`} />
-         {"  "}
-         <span>{e.title}</span>
+   render={({ handleSubmit, form }) => {
+    resetForm = form.reset;
+    return (
+      <form onSubmit={handleSubmit} className={s.form}>
+       <div className={s.group_1}>
+        <label>
+         <span className={s.l_title}>Task name:</span>
+         <Field component="input" type="text" name="title" placeholder="Go to work..." required />
         </label>
-       ))}
-      </div>
-
-      <h2>Subtasks:</h2>
-      <div className={s.add_elem}>
-       <input ref={task_input} type="text" name="addsubtask" placeholder="Others" />
-       <button onClick={onAddLocalTask} type="button">
-        Create
-       </button>
-      </div>
-
-      <div className={s.subtasks_list}>
-       {localTasks.map((e) => (
-        <div key={e.id} className={s.task}>
+        <label>
+         <span className={s.l_title}>Task description:</span>
+         <Field component="textarea" name="desc" rows="5" placeholder="At 6 AM " required />
+        </label>
+        <div className={s.status}>
+         <h2>Status:</h2>
          <label>
-          <input type="checkbox" onChange={() => toggleSelect(e.id, true)} name={e.title} checked={e.checked} />
-          <span>{e.title}</span>
+          <span>To-do</span>
+          <Field component="input" type="radio" name="status" value="0" />
          </label>
-         <button onClick={() => removeTask(e.id)} type="button">
-          Delete
+         <label>
+          <span>In-Progress</span>
+          <Field component="input" type="radio" name="status" value="1" />
+         </label>
+         <label>
+          <span>Done</span>
+          <Field component="input" type="radio" name="status" value="2" />
+         </label>
+        </div>
+       </div>
+       <div className={s.group_2}>
+        <h2 className={s.tags_title}>Tags:</h2>
+  
+        <div className={s.add_elem}>
+         <input ref={tag_input} type="text" name="addtag" placeholder="Others" />
+         <button onClick={onAddLocalTag} type="button">
+          Create
          </button>
         </div>
-       ))}
-      </div>
-     </div>
-     {isPending ? <span className={s.pending}>Pending...</span> : ""}
-     <div className={s.buttons}>
-      <button type="submit">Submit</button>
-      <button type="button" onClick={close}>
-       Cancel
-      </button>
-     </div>
-    </form>
-   )}
+  
+        <div className={s.tag_list}>
+         {localTags?.map((e) => (
+          <label key={e.id}>
+           <input type="checkbox" onChange={() => toggleSelect(e.id)} checked={e.checked} name={`tag_${e.title}`} />
+           {"  "}
+           <span>{e.title}</span>
+          </label>
+         ))}
+        </div>
+  
+        <h2>Subtasks:</h2>
+        <div className={s.add_elem}>
+         <input ref={task_input} type="text" name="addsubtask" placeholder="Others" />
+         <button onClick={onAddLocalTask} type="button">
+          Create
+         </button>
+        </div>
+  
+        <div className={s.subtasks_list}>
+         {localTasks.map((e) => (
+          <div key={e.id} className={s.task}>
+           <label>
+            <input type="checkbox" onChange={() => toggleSelect(e.id, true)} name={e.title} checked={e.checked} />
+            <span>{e.title}</span>
+           </label>
+           <button onClick={() => removeTask(e.id)} type="button">
+            Delete
+           </button>
+          </div>
+         ))}
+        </div>
+       </div>
+       {isPending ? <span className={s.pending}>Pending...</span> : ""}
+       <div className={s.buttons}>
+        <button type="submit">Submit</button>
+        <button type="button" onClick={close}>
+         Cancel
+        </button>
+       </div>
+      </form>
+     )
+   }}
   />
  );
 };
