@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import s from "./s.module.css";
 import { useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
+import toTitleCase from "../../tools/toTitleCase";
+import toSentenceCase from "../../tools/toSentenceCase";
 
 const TaskForm = ({ onSubmitCB, close, currentObj }) => {
  let resetForm = null;
@@ -21,6 +23,8 @@ const TaskForm = ({ onSubmitCB, close, currentObj }) => {
   const newObj = {
    ...obj,
    tags,
+   title: toTitleCase(obj?.title || ''),
+   desc: toSentenceCase(obj?.desc || ''),
    subtasks: localTasks,
    status: Number(obj.status),
   };
