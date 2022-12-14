@@ -53,6 +53,7 @@ const MainScreen = () => {
  }, []);
 
 
+ //set sort on link change && isInit
  useEffect(() => {
   if(!currentTag && isInit)  disp(setCurrentSort());
   else if(currentTagS !== currentTag && currentTag) {
@@ -64,12 +65,12 @@ const MainScreen = () => {
   setTimeout(() => setLoad(false), 200);
  }, [currentTag]);
 
+ //update sort
  useEffect(() => {
-  if(tasks && isInit) {
-   disp(setCurrentSort(currentTag?.replace(/_/g," ")));
-  }
+  if(tasks && isInit) disp(setCurrentSort(currentTag?.replace(/_/g," ")));
  }, [tasks, isInit])
 
+ //redirect if empty
  useEffect(() => {
   !sortedTasks?.length && nav('/');
  }, [sortedTasks, currentTag])
