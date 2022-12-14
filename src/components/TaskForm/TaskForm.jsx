@@ -90,17 +90,17 @@ useEffect(() => {
    ];
    setTags(all);
   }
+ }, [currentObj]);
+
+ useEffect(() => {
   if(currentObj?.subtasks.length && isEditMode) {
     setTasks([...currentObj.subtasks]);
   } else setTasks([]);
-
- }, [currentObj]);
+ }, [currentObj, isPending]);
 
  useEffect(() => {
     setTags(globalTags?.map((e) => ({ id: uuid(), title: e, checked: false })));
  }, [globalTags]);
-
- useEffect(() => {}, [localTags]);
 
  return (
   <Form
