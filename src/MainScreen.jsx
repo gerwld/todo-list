@@ -72,7 +72,7 @@ const MainScreen = () => {
 
  //redirect if empty
  useEffect(() => {
-  !sortedTasks?.length && nav('/');
+  if(!sortedTasks?.length && isInit) nav('/');
  }, [sortedTasks, currentTag])
 
 
