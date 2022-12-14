@@ -188,7 +188,7 @@ label {
 
 .modal_content {
   transform: translateY(-20px);
-  transition: transform 0.28s;
+  transition: transform 0.25s;
  }
 
  .modal_open .modal_content {
