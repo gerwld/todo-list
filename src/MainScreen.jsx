@@ -62,7 +62,13 @@ const MainScreen = () => {
 
   //imitate pending for ux flow
   setTimeout(() => setLoad(false), 200);
- }, [currentTag, tasks])
+ }, [currentTag]);
+
+ useEffect(() => {
+  if(tasks && isInit) {
+   disp(setCurrentSort(currentTag?.replace(/_/g," ")));
+  }
+ }, [tasks, isInit])
 
  useEffect(() => {
   !sortedTasks?.length && nav('/');
