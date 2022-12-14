@@ -1,15 +1,13 @@
-import { Field, Form } from "react-final-form";
 import React, { useEffect, useRef, useState } from "react";
-
-import s from "./s.module.css";
+import { Field, Form } from "react-final-form";
 import { useSelector } from "react-redux";
+import s from "./s.module.css";
+
+import { toTitleCase, toSentenceCase } from "../../tools/";
 import { v4 as uuid } from "uuid";
-import toTitleCase from "../../tools/toTitleCase";
-import toSentenceCase from "../../tools/toSentenceCase";
 
 const TaskForm = ({ onSubmitCB, close, currentObj }) => {
- let resetForm = null;
- let tag_input = useRef(null), task_input = useRef(null);
+ let tag_input = useRef(null), task_input = useRef(null), resetForm;
  let [localTags, setTags] = useState([]);
  let [localTasks, setTasks] = useState([]);
  const { globalTags, isPending, isEditMode, isCreateMode} = useSelector(({ tasks }) => ({
@@ -127,16 +125,16 @@ useEffect(() => {
         <div className={s.status}>
          <h2>Status:</h2>
          <label>
-          <span>To-do</span>
           <Field component="input" type="radio" name="status" value="0" />
+          <span>To-do</span>
          </label>
          <label>
-          <span>In-Progress</span>
           <Field component="input" type="radio" name="status" value="1" />
+          <span>In-Progress</span>
          </label>
          <label>
-          <span>Done</span>
           <Field component="input" type="radio" name="status" value="2" />
+          <span>Done</span>
          </label>
         </div>
        </div>

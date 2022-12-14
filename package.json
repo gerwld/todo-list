@@ -12,7 +12,6 @@
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d dist"
   },
-  "license": "MIT",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",
     "axios": "^1.2.0",

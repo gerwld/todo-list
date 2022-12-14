@@ -41,8 +41,6 @@
 
 .status label {
  display: flex;
- flex-direction: row-reverse;
- justify-content: flex-end;
  align-items: center;
  line-height: 2em;
 }
@@ -63,15 +61,25 @@ textarea {
  box-sizing: border-box;
  border-radius: 0;
  border: 1px solid #e3e3e3;
+ cursor: text;
 }
 
 input[type="text"]:focus,
-input[type="radio"]:focus,
-input[type="checkbox"]:focus,
 textarea:focus,
 button:focus {
  outline: 2px solid #82cff0;
  /* border-color: blue; */
+}
+
+input[type="checkbox"],
+input[type="radio"],
+label {
+ cursor: pointer;
+}
+
+input[type="checkbox"]:focus,
+input[type="radio"]:focus {
+ outline: none;
 }
 
 .form button {
@@ -134,4 +142,22 @@ button:focus {
  position: absolute;
  bottom: 60px;
  right: 0;
+}
+
+.status label {
+ padding-left: 10px;
+ border: 1px solid #343e77;
+ height: 45px;
+ margin-bottom: -1px;
+
+ border: 1px solid #424b53;
+ box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
+ z-index: 10;
+}
+
+.status label:has(input:checked) {
+ position: relative;
+ background-color: rgba(255, 255, 255, 0.158);
+ border-color: #8e9399;
+ z-index: 100;
 }
