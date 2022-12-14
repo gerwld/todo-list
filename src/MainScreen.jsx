@@ -52,10 +52,14 @@ const MainScreen = () => {
   }, 200);
  }, []);
 
+
  useEffect(() => {
-  if(currentTagS !== currentTag) {
+  if(!currentTag && isInit)  disp(setCurrentSort());
+  else if(currentTagS !== currentTag && currentTag) {
    setLoad(true);
-  } disp(setCurrentSort(currentTag?.replace(/_/g," ")));
+   disp(setCurrentSort(currentTag?.replace(/_/g," ")));
+  }
+
   //imitate pending for ux flow
   setTimeout(() => setLoad(false), 200);
  }, [currentTag, tasks])
